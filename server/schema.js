@@ -350,7 +350,13 @@ export async function createTables() {
     await client.query(`
       UPDATE users 
       SET permissions = array_cat(permissions, ARRAY['view_service', 'edit_service']) 
-      WHERE (department = 'admin' OR email = 'admin@company.com') 
+      WHERE (
+        department = 'admin'
+        OR 'manage_users' = ANY(permissions)
+        OR 'view_all_orders' = ANY(permissions)
+        OR 'view_installation' = ANY(permissions)
+        OR 'view_dispatch' = ANY(permissions)
+      )
       AND NOT ('view_service' = ANY(permissions));
     `);
 

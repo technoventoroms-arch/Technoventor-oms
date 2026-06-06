@@ -81,7 +81,7 @@ export function Sidebar({
         {hasPermission(PERMISSIONS.VIEW_DISPATCH) && (
           <NavItem icon={<Truck />} label="Dispatch" active={view === 'dispatch'} onClick={() => { setView('dispatch'); setSelectedOrder(null); }} />
         )}
-        {hasPermission(PERMISSIONS.VIEW_SERVICE) && (
+        {(hasPermission(PERMISSIONS.VIEW_SERVICE) || currentUser?.department === 'admin') && (
           <NavItem icon={<Wrench />} label="Service" active={view === 'service'} onClick={() => { setView('service'); setSelectedOrder(null); }} />
         )}
 
