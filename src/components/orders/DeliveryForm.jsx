@@ -64,13 +64,13 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
 
   return (
     <div className="space-y-8 pb-12">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
           <Truck className="w-48 h-48" />
         </div>
         
-        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-          <Truck className="w-5 h-5 text-emerald-400" />
+        <h3 className="text-lg font-bold text-text-primary mb-6 flex items-center gap-2">
+          <Truck className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
           Order Delivery Details
         </h3>
 
@@ -82,7 +82,7 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
               value={formData.handoverTo}
               onChange={handleChange}
               placeholder="Person or Department name"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50"
+              className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-emerald-500/50"
             />
           </FormField>
 
@@ -92,16 +92,16 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
               name="deliveryDate"
               value={formData.deliveryDate}
               onChange={handleChange}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50"
+              className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-emerald-500/50"
             />
           </FormField>
 
           {/* Proof of Delivery Attachment */}
           <div className="col-span-1 md:col-span-2 mt-4">
-            <label className="block text-sm font-semibold text-slate-400 mb-2">Proof of Delivery (PDF/Image)</label>
+            <label className="block text-sm font-semibold text-text-secondary mb-2">Proof of Delivery (PDF/Image)</label>
             <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-sm font-medium text-white cursor-pointer transition-colors">
-                <Upload className="w-4 h-4 text-emerald-400" />
+              <label className="flex items-center gap-2 px-4 py-2.5 bg-surface-raised dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-border rounded-xl text-sm font-medium text-text-primary cursor-pointer transition-colors">
+                <Upload className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                 Upload POD
                 <input
                   type="file"
@@ -113,12 +113,12 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
               
               {formData.proofOfDelivery ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-emerald-400 flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                     <AlertCircle className="w-4 h-4" /> Uploaded successfully
                   </span>
                   <button 
                     onClick={() => handleDownload(formData.proofOfDelivery, `POD_${formData.deliveryDate || 'Draft'}`)}
-                    className="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1"
+                    className="text-emerald-700 dark:text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-1"
                   >
                     <Download className="w-4 h-4" /> Download
                   </button>
@@ -130,7 +130,7 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
                   </button>
                 </div>
               ) : (
-                <span className="text-sm text-slate-500 italic">No file uploaded</span>
+                <span className="text-sm text-text-muted italic">No file uploaded</span>
               )}
             </div>
           </div>
@@ -142,7 +142,7 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
                 value={formData.remarks}
                 onChange={handleChange}
                 placeholder="Any additional notes regarding the delivery..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50"
+                className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-emerald-500/50"
                 rows={3}
               />
             </FormField>
@@ -153,7 +153,7 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
       <div className="flex justify-end gap-3 mt-8">
         <button
           onClick={onCancel}
-          className="px-6 py-2.5 border border-slate-700 text-slate-300 font-medium rounded-xl hover:bg-slate-800 transition-colors"
+          className="px-6 py-2.5 border border-border text-text-secondary font-medium rounded-xl hover:bg-surface-raised transition-colors"
         >
           Cancel
         </button>
@@ -162,7 +162,7 @@ export function DeliveryForm({ initialData = {}, onSave, onCancel }) {
           disabled={isSubmitting}
           className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition-colors shadow-lg shadow-emerald-500/20 flex items-center gap-2 disabled:opacity-50"
         >
-          {isSubmitting ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : <Truck className="w-4 h-4" />}
+          {isSubmitting ? <span className="w-4 h-4 btn-spinner"></span> : <Truck className="w-4 h-4" />}
           {isSubmitting ? 'Saving...' : 'Save Delivery Details'}
         </button>
       </div>

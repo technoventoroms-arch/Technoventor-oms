@@ -19,11 +19,11 @@ export function InstallationTab({ order, editingInstallation, setEditingInstalla
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+          <h3 className="text-xl font-bold text-text-primary tracking-tight flex items-center gap-2">
             <Zap className="w-5 h-5 text-blue-400" />
             Order Installation
           </h3>
-          <p className="text-slate-400 mt-1 max-w-2xl text-sm leading-relaxed">
+          <p className="text-text-secondary mt-1 max-w-2xl text-sm leading-relaxed">
             Record installation details, technician names, and site contact information.
           </p>
         </div>
@@ -54,7 +54,7 @@ export function InstallationTab({ order, editingInstallation, setEditingInstalla
         </div>
       ) : (
         <EmptyState 
-          icon={<Zap className="w-6 h-6 text-slate-400" />} 
+          icon={<Zap className="w-6 h-6 text-text-secondary" />} 
           message="No installation details have been recorded yet." 
           canEdit={hasPermission(PERMISSIONS.EDIT_INSTALLATION)}
           onEdit={() => setEditingInstallation(true)}

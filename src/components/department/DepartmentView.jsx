@@ -21,7 +21,7 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
   const renderOrderCard = (order, isPast = false) => (
     <div 
       key={order.id}
-      className={`bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:bg-slate-800/50 transition-all ${isPast ? 'opacity-80' : ''}`}
+      className={`bg-surface border border-border rounded-xl p-6 hover:bg-surface-raised transition-all ${isPast ? 'opacity-80' : ''}`}
     >
       <div className="flex items-center justify-between">
         <div
@@ -29,15 +29,15 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
           onClick={() => onSelectOrder(order)}
         >
           <div className="flex items-center gap-3">
-            <span className="font-mono text-emerald-400">{order.id}</span>
-            <span className="text-white font-semibold">{hasPermission(PERMISSIONS.VIEW_PROJECT_NAME) ? order.projectName : 'Restricted'}</span>
+            <span className="font-mono text-emerald-700 dark:text-emerald-400">{order.id}</span>
+            <span className="text-text-primary font-semibold">{hasPermission(PERMISSIONS.VIEW_PROJECT_NAME) ? order.projectName : 'Restricted'}</span>
             <StageTag stage={order.currentStage} />
           </div>
           <div className="flex gap-4 mt-1">
-            <p className="text-sm text-slate-400">{hasPermission(PERMISSIONS.VIEW_CUSTOMER_NAME) ? (order.customerDetails?.name || 'N/A') : 'Restricted'}</p>
+            <p className="text-sm text-text-secondary">{hasPermission(PERMISSIONS.VIEW_CUSTOMER_NAME) ? (order.customerDetails?.name || 'N/A') : 'Restricted'}</p>
             {department === 'finance' && (
               <div className="flex gap-4">
-                <p className="text-sm text-emerald-400 font-mono">
+                <p className="text-sm text-emerald-700 dark:text-emerald-400 font-mono">
                   PO: {(order.procurement?.boqPurchases || [])
                     .map(p => p.poDetails?.poNumber)
                     .filter(n => n && n.trim() !== '')
@@ -54,14 +54,14 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
         <div className="flex items-center gap-4">
           <div className="text-right" onClick={() => onSelectOrder(order)} style={{cursor:'pointer'}}>
             {hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && (
-              <p className="text-lg font-bold text-white">₹{order.totalValue?.toLocaleString('en-IN') || 0}</p>
+              <p className="text-lg font-bold text-text-primary">₹{order.totalValue?.toLocaleString('en-IN') || 0}</p>
             )}
-            <p className="text-sm text-slate-400">Created: {order.createdDate}</p>
+            <p className="text-sm text-text-secondary">Created: {order.createdDate}</p>
           </div>
           {onSelectOrderWithPlanning && (
             <button
               onClick={() => onSelectOrderWithPlanning(order)}
-              className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl text-xs font-bold hover:bg-emerald-500/20 transition-all whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 rounded-xl text-xs font-bold hover:bg-emerald-500/20 transition-all whitespace-nowrap"
               title="View Order Planning"
             >
               <ClipboardList className="w-3.5 h-3.5" />
@@ -79,19 +79,19 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
         <div className="flex items-center gap-4">
           <div className="p-3 bg-white/10 rounded-xl">{icons[department]}</div>
           <div>
-            <h2 className="text-2xl font-bold text-white capitalize">{department} Department</h2>
-            <p className="text-slate-300">{orders.length} orders pending action</p>
+            <h2 className="text-2xl font-bold text-text-primary capitalize">{department} Department</h2>
+            <p className="text-text-secondary">{orders.length} orders pending action</p>
           </div>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-bold text-white mb-4">Pending Action</h3>
+        <h3 className="text-lg font-bold text-text-primary mb-4">Pending Action</h3>
         {orders.length === 0 ? (
-          <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-12 text-center">
+          <div className="bg-surface border border-border rounded-xl p-12 text-center">
             <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-green-500/50" />
-            <h3 className="text-xl font-semibold text-white mb-2">All Clear!</h3>
-            <p className="text-slate-400">No pending orders</p>
+            <h3 className="text-xl font-semibold text-text-primary mb-2">All Clear!</h3>
+            <p className="text-text-secondary">No pending orders</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -101,8 +101,8 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
       </div>
 
       {pastOrders.length > 0 && (
-        <div className="space-y-4 mt-8 pt-8 border-t border-slate-800/50">
-          <h3 className="text-lg font-bold text-white mb-4">Escalated / Past Orders</h3>
+        <div className="space-y-4 mt-8 pt-8 border-t border-border">
+          <h3 className="text-lg font-bold text-text-primary mb-4">Escalated / Past Orders</h3>
           <div className="space-y-4">
             {pastOrders.map(o => renderOrderCard(o, true))}
           </div>

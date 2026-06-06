@@ -283,14 +283,14 @@ export function CreateOrder({ onSubmit, onCancel }) {
     <div className="space-y-8 pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-white bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-text-primary bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
             Create Order
           </h2>
-          <p className="text-slate-400">Initialize a new project and order details</p>
+          <p className="text-text-secondary">Initialize a new project and order details</p>
         </div>
         <button
           onClick={() => setImportMode(!importMode)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-slate-800/50 border border-slate-700 rounded-xl text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-all shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-surface-raised border border-border rounded-xl text-sm text-text-secondary hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-text-primary transition-all shadow-lg"
         >
           <FileSpreadsheet className="w-5 h-5 text-emerald-500" />
           Import BOQ (Excel)
@@ -298,19 +298,19 @@ export function CreateOrder({ onSubmit, onCancel }) {
       </div>
 
       {importMode && (
-        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-700 rounded-2xl p-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
+        <div className="bg-surface dark:bg-surface dark:bg-slate-900/80 backdrop-blur-md border border-border rounded-2xl p-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-emerald-500/20 rounded-lg">
-                <Upload className="w-5 h-5 text-emerald-400" />
+                <Upload className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
               </div>
-              <h3 className="text-xl font-semibold text-white">Import BOQ Items</h3>
+              <h3 className="text-xl font-semibold text-text-primary">Import BOQ Items</h3>
             </div>
             <div className="flex items-center gap-3">
-              <a href="/boq_sample.csv" download className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-sm text-emerald-400 hover:bg-emerald-500/20 transition-all font-medium">
+              <a href="/boq_sample.csv" download className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 transition-all font-medium">
                 <Download className="w-4 h-4" /> Template
               </a>
-              <label className="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-slate-300 cursor-pointer hover:bg-slate-700 hover:text-white transition-all">
+              <label className="flex items-center gap-2 px-4 py-2 bg-surface-raised dark:bg-slate-800 border border-border rounded-xl text-sm text-text-secondary cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-text-primary transition-all">
                 <Plus className="w-4 h-4" /> Upload CSV
                 <input type="file" accept=".csv,.tsv,.txt" onChange={handleFileUpload} className="hidden" />
               </label>
@@ -321,24 +321,24 @@ export function CreateOrder({ onSubmit, onCancel }) {
             onChange={(e) => setExcelData(e.target.value)}
             onPaste={(e) => handleExcelPaste(e.clipboardData.getData('text'))}
             placeholder="Paste your Excel table rows here..."
-            className="w-full h-48 bg-slate-950/50 border border-slate-700 rounded-xl p-4 text-slate-200 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all"
+            className="w-full h-48 bg-white dark:bg-slate-950/50 border border-border rounded-xl p-4 text-text-primary text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all"
           />
           <div className="flex justify-end gap-3 mt-6">
-            <button type="button" onClick={() => setImportMode(false)} className="px-5 py-2 text-sm text-slate-400 hover:text-white transition-colors">Cancel</button>
+            <button type="button" onClick={() => setImportMode(false)} className="px-5 py-2 text-sm text-text-secondary hover:text-text-primary transition-colors">Cancel</button>
             <button type="button" onClick={() => handleExcelPaste(excelData)} className="px-6 py-2.5 bg-emerald-500 text-white rounded-xl text-sm font-semibold hover:bg-emerald-600 shadow-lg shadow-emerald-500/20 transition-all">Load Items</button>
           </div>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-8 shadow-xl">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-border rounded-2xl p-8 shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FormField label="System Order ID" icon={<Tag />}>
                 <input
                   type="text"
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 font-mono"
+                  className="w-full bg-surface-raised border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30 font-mono"
                   placeholder="e.g. ORD-2024-001"
                   required
                 />
@@ -348,13 +348,13 @@ export function CreateOrder({ onSubmit, onCancel }) {
                   type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                  className="w-full bg-surface-raised border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
                   placeholder="e.g. Mumbai HQ Infrastructure"
                   required
                 />
               </FormField>
               <div className="flex flex-col justify-end">
-                 <p className="text-sm text-slate-500 mb-1">Status</p>
+                 <p className="text-sm text-text-muted mb-1">Status</p>
                  <div className="px-4 py-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-blue-400 font-medium inline-flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
                     Initializing New Order
@@ -379,10 +379,10 @@ export function CreateOrder({ onSubmit, onCancel }) {
           addSubItem={addSubItem}
         />
 
-        <div className="flex justify-end gap-4 p-6 bg-slate-900/50 border border-slate-800 rounded-2xl">
-          <button type="button" onClick={onCancel} className="px-8 py-3 text-slate-400 font-bold hover:text-white transition-colors">Cancel</button>
+        <div className="flex justify-end gap-4 p-6 bg-surface border border-border rounded-2xl">
+          <button type="button" onClick={onCancel} className="px-8 py-3 text-text-secondary font-bold hover:text-text-primary transition-colors">Cancel</button>
           <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 px-12 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-black shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50">
-            {isSubmitting ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : <Plus className="w-5 h-5" />}
+            {isSubmitting ? <span className="w-4 h-4 btn-spinner"></span> : <Plus className="w-5 h-5" />}
             {isSubmitting ? 'CREATING...' : 'CREATE ORDER'}
           </button>
         </div>

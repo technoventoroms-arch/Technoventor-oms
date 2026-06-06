@@ -7,17 +7,17 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
   };
 
   return (
-    <div className="space-y-4 pt-2 border-t border-slate-800/30">
+    <div className="space-y-4 pt-2 border-t border-border">
       <FormField label={`${labelPrefix}Address Line1`}>
         <input
           type="text"
           value={fields.line1 || ''}
           onChange={(e) => handleChange('line1', e.target.value)}
-          className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
           placeholder="Street address, P.O. box, company name, c/o"
           required
         />
-        <p className="text-[10px] text-slate-500 mt-1 ml-1 leading-none">Street address, P.O. box, company name, c/o</p>
+        <p className="text-[10px] text-text-muted mt-1 ml-1 leading-none">Street address, P.O. box, company name, c/o</p>
       </FormField>
       
       <FormField label={`${labelPrefix}Address Line2`}>
@@ -25,10 +25,10 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
           type="text"
           value={fields.line2 || ''}
           onChange={(e) => handleChange('line2', e.target.value)}
-          className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
           placeholder="Apartment, suite, unit, building, floor, etc."
         />
-        <p className="text-[10px] text-slate-500 mt-1 ml-1 leading-none">Apartment, suite, unit, building, floor, etc.</p>
+        <p className="text-[10px] text-text-muted mt-1 ml-1 leading-none">Apartment, suite, unit, building, floor, etc.</p>
       </FormField>
 
       <div className="grid grid-cols-2 gap-4">
@@ -37,7 +37,7 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
             type="text"
             value={fields.city || ''}
             onChange={(e) => handleChange('city', e.target.value)}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             required
           />
         </FormField>
@@ -46,7 +46,7 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
             type="text"
             value={fields.state || ''}
             onChange={(e) => handleChange('state', e.target.value)}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             required
           />
         </FormField>
@@ -58,7 +58,7 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
             type="text"
             value={fields.zip || ''}
             onChange={(e) => handleChange('zip', e.target.value)}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             required
           />
         </FormField>
@@ -66,7 +66,7 @@ export function AddressFields({ fields, onChange, labelPrefix = '' }) {
           <select
             value={fields.country || 'India'}
             onChange={(e) => handleChange('country', e.target.value)}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
           >
             <option value="India">India</option>
           </select>

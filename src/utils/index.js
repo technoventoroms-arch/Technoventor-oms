@@ -54,6 +54,16 @@ export const formatDateTime = (dateString) => {
   }
 };
 /**
+ * Returns a stable grouping key for a procurement purchase (PO number or vendor name).
+ */
+export const getPurchasePoKey = (purchase) =>
+  purchase?.poDetails?.poNumber?.trim() || purchase?.vendorDetails?.name?.trim() || '';
+
+/** True when the order has at least one raised procurement PO. */
+export const hasRaisedProcurementPO = (order) =>
+  (order?.procurement?.boqPurchases || []).some(p => getPurchasePoKey(p));
+
+/**
  * Triggers a download of a CSV file.
  * @param {string} csvContent - The row-separated CSV content.
  * @param {string} filename - The name of the file to download.

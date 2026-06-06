@@ -19,11 +19,11 @@ export function InvoicingTab({ order, editingInvoice, setEditingInvoice, invoice
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+          <h3 className="text-xl font-bold text-text-primary tracking-tight flex items-center gap-2">
             <FileText className="w-5 h-5 text-blue-400" />
             Order Invoicing
           </h3>
-          <p className="text-slate-400 mt-1 max-w-2xl text-sm leading-relaxed">
+          <p className="text-text-secondary mt-1 max-w-2xl text-sm leading-relaxed">
             Provide the final tax invoice details and upload the E-Way bill after the goods have been dispatched.
           </p>
         </div>
@@ -45,9 +45,9 @@ export function InvoicingTab({ order, editingInvoice, setEditingInvoice, invoice
             <InfoCard label="Invoice Date" value={formatDate(invoiceData.invoiceDate)} />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-slate-800">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-3">Invoice Attachment</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-border">
+            <div className="bg-white dark:bg-slate-900 border border-border rounded-xl p-5">
+               <p className="text-xs text-text-muted font-bold uppercase tracking-widest mb-3">Invoice Attachment</p>
                {invoiceData.invoiceAttachment ? (
                  <button onClick={() => {
                     const link = document.createElement('a');
@@ -56,15 +56,15 @@ export function InvoicingTab({ order, editingInvoice, setEditingInvoice, invoice
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                 }} className="flex items-center gap-2 px-4 py-2.5 bg-blue-500/10 text-blue-400 rounded-xl text-sm font-semibold hover:bg-blue-500 hover:text-white transition-colors">
+                 }} className="flex items-center gap-2 px-4 py-2.5 bg-blue-500/10 text-blue-400 rounded-xl text-sm font-semibold hover:bg-blue-500 hover:text-text-primary transition-colors">
                     <Download className="w-4 h-4" /> Download Tax Invoice PDF
                  </button>
                ) : (
-                 <p className="text-slate-500 text-sm italic">Not Uploaded</p>
+                 <p className="text-text-muted text-sm italic">Not Uploaded</p>
                )}
             </div>
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-3">E-Way Bill Attachment</p>
+            <div className="bg-white dark:bg-slate-900 border border-border rounded-xl p-5">
+               <p className="text-xs text-text-muted font-bold uppercase tracking-widest mb-3">E-Way Bill Attachment</p>
                {invoiceData.ewayBillAttachment ? (
                  <button onClick={() => {
                     const link = document.createElement('a');
@@ -73,11 +73,11 @@ export function InvoicingTab({ order, editingInvoice, setEditingInvoice, invoice
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                 }} className="flex items-center gap-2 px-4 py-2.5 bg-orange-500/10 text-orange-400 rounded-xl text-sm font-semibold hover:bg-orange-500 hover:text-white transition-colors">
+                 }} className="flex items-center gap-2 px-4 py-2.5 bg-orange-500/10 text-orange-400 rounded-xl text-sm font-semibold hover:bg-orange-500 hover:text-text-primary transition-colors">
                     <Download className="w-4 h-4" /> Download E-Way Bill PDF
                  </button>
                ) : (
-                 <p className="text-slate-500 text-sm italic">Not Uploaded</p>
+                 <p className="text-text-muted text-sm italic">Not Uploaded</p>
                )}
             </div>
           </div>
@@ -90,7 +90,7 @@ export function InvoicingTab({ order, editingInvoice, setEditingInvoice, invoice
         </div>
       ) : (
         <EmptyState 
-          icon={<FileText className="w-6 h-6 text-slate-400" />} 
+          icon={<FileText className="w-6 h-6 text-text-secondary" />} 
           message="No invoice details have been recorded yet." 
           canEdit={hasPermission(PERMISSIONS.EDIT_INVOICING)}
           onEdit={() => setEditingInvoice(true)}

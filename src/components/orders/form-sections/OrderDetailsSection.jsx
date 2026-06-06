@@ -11,7 +11,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="text"
             value={orderDetails.orderNumber}
             onChange={(e) => setOrderDetails({...orderDetails, orderNumber: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
             placeholder="PO/2024/001"
             required
           />
@@ -21,7 +21,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="date"
             value={orderDetails.orderDate}
             onChange={(e) => setOrderDetails({...orderDetails, orderDate: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
           />
         </FormField>
         <FormField label="Quotation/Tender No.">
@@ -29,7 +29,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="text"
             value={orderDetails.quotationNumber}
             onChange={(e) => setOrderDetails({...orderDetails, quotationNumber: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
           />
         </FormField>
         <FormField label="Quotation Date">
@@ -37,7 +37,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="date"
             value={orderDetails.quotationDate}
             onChange={(e) => setOrderDetails({...orderDetails, quotationDate: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
           />
         </FormField>
         <FormField label="Expected Delivery Date">
@@ -45,7 +45,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="date"
             value={orderDetails.expectedDeliveryDate}
             onChange={(e) => setOrderDetails({...orderDetails, expectedDeliveryDate: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
           />
         </FormField>
         <FormField label="Dispatch Date">
@@ -53,7 +53,7 @@ export function OrderDetailsSection({ orderDetails, setOrderDetails }) {
             type="date"
             value={orderDetails.dispatchDate}
             onChange={(e) => setOrderDetails({...orderDetails, dispatchDate: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
           />
         </FormField>
       </div>

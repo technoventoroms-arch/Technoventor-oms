@@ -8,8 +8,8 @@ export function OverviewTab({ order, hasPermission }) {
   return (
     <div className="space-y-10">
       <div>
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-          <Users className="w-4 h-4 text-emerald-400" />
+        <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
+          <Users className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
           1. Customer Details
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -28,8 +28,8 @@ export function OverviewTab({ order, hasPermission }) {
         </div>
       </div>
 
-      <div className="pt-8 border-t border-slate-800/50">
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <div className="pt-8 border-t border-border">
+        <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
           <Tag className="w-4 h-4 text-blue-400" />
           2. Order Details
         </h3>
@@ -43,8 +43,8 @@ export function OverviewTab({ order, hasPermission }) {
         </div>
       </div>
 
-      <div className="pt-8 border-t border-slate-800/50">
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <div className="pt-8 border-t border-border">
+        <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-purple-400" />
           3. EPBG Details
         </h3>
@@ -52,7 +52,7 @@ export function OverviewTab({ order, hasPermission }) {
           <InfoCard label="EPBG Required" value={order.epbgDetails?.required || 'No'} highlight={order.epbgDetails?.required === 'Yes'} />
           {order.epbgDetails?.required === 'Yes' && (
             <div className="flex flex-col gap-1.5">
-              <p className="text-xs text-slate-500 font-semibold">Attachment Draft</p>
+              <p className="text-xs text-text-muted font-semibold">Attachment Draft</p>
               {order.epbgDetails?.attachmentDraft ? (
                 <button 
                   onClick={() => {
@@ -63,21 +63,21 @@ export function OverviewTab({ order, hasPermission }) {
                     link.click();
                     document.body.removeChild(link);
                   }}
-                  className="flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors w-fit"
+                  className="flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400 hover:text-emerald-300 transition-colors w-fit"
                 >
                   <Download className="w-4 h-4" />
                   Download Draft.pdf
                 </button>
               ) : (
-                <span className="text-sm text-slate-500 italic">No attachment uploaded</span>
+                <span className="text-sm text-text-muted italic">No attachment uploaded</span>
               )}
             </div>
           )}
         </div>
       </div>
 
-      <div className="pt-8 border-t border-slate-800/50">
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+      <div className="pt-8 border-t border-border">
+        <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
           <CreditCard className="w-4 h-4 text-amber-400" />
           4. Commercial Terms
         </h3>
@@ -88,21 +88,21 @@ export function OverviewTab({ order, hasPermission }) {
         </div>
       </div>
 
-      <div className="pt-8 border-t border-slate-800/50">
-        <div className="bg-slate-950/30 rounded-2xl p-6 border border-slate-800/50">
+      <div className="pt-8 border-t border-border">
+        <div className="bg-slate-50 dark:bg-slate-950/30 rounded-2xl p-6 border border-border">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-emerald-400" />
+            <h3 className="text-sm font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
+              <DollarSign className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               Overall Project Value
             </h3>
             {hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && (
               <div className="text-right">
-                <p className="text-xs text-slate-500 font-semibold uppercase mb-1">Grand Total (Incl. GST)</p>
-                <p className="text-3xl font-black text-emerald-400 font-mono">₹{order.summary?.grandTotal?.toLocaleString('en-IN') || order.totalValue.toLocaleString('en-IN')}</p>
+                <p className="text-xs text-text-muted font-semibold uppercase mb-1">Grand Total (Incl. GST)</p>
+                <p className="text-3xl font-black text-emerald-700 dark:text-emerald-400 font-mono">₹{order.summary?.grandTotal?.toLocaleString('en-IN') || order.totalValue.toLocaleString('en-IN')}</p>
               </div>
             )}
           </div>
-          {!hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && <p className="text-slate-500 text-sm italic">Financial details are restricted based on your role.</p>}
+          {!hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && <p className="text-text-muted text-sm italic">Financial details are restricted based on your role.</p>}
         </div>
       </div>
     </div>

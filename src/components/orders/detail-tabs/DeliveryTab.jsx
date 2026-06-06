@@ -19,11 +19,11 @@ export function DeliveryTab({ order, editingDelivery, setEditingDelivery, delive
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Truck className="w-5 h-5 text-emerald-400" />
+          <h3 className="text-xl font-bold text-text-primary tracking-tight flex items-center gap-2">
+            <Truck className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
             Order Delivery
           </h3>
-          <p className="text-slate-400 mt-1 max-w-2xl text-sm leading-relaxed">
+          <p className="text-text-secondary mt-1 max-w-2xl text-sm leading-relaxed">
             Record final handover details and upload the signed Proof of Delivery (POD).
           </p>
         </div>
@@ -45,9 +45,9 @@ export function DeliveryTab({ order, editingDelivery, setEditingDelivery, delive
             <InfoCard label="Delivery Date" value={formatDate(deliveryData.deliveryDate)} />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-slate-800">
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-3">Proof of Delivery (POD)</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-border">
+            <div className="bg-white dark:bg-slate-900 border border-border rounded-xl p-5">
+               <p className="text-xs text-text-muted font-bold uppercase tracking-widest mb-3">Proof of Delivery (POD)</p>
                {deliveryData.proofOfDelivery ? (
                  <button onClick={() => {
                     const link = document.createElement('a');
@@ -56,11 +56,11 @@ export function DeliveryTab({ order, editingDelivery, setEditingDelivery, delive
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                 }} className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl text-sm font-semibold hover:bg-emerald-500 hover:text-white transition-colors">
+                 }} className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 rounded-xl text-sm font-semibold hover:bg-emerald-500 hover:text-text-primary transition-colors">
                     <Download className="w-4 h-4" /> Download POD
                  </button>
                ) : (
-                 <p className="text-slate-500 text-sm italic">Not Uploaded</p>
+                 <p className="text-text-muted text-sm italic">Not Uploaded</p>
                )}
             </div>
           </div>
@@ -73,7 +73,7 @@ export function DeliveryTab({ order, editingDelivery, setEditingDelivery, delive
         </div>
       ) : (
         <EmptyState 
-          icon={<Truck className="w-6 h-6 text-slate-400" />} 
+          icon={<Truck className="w-6 h-6 text-text-secondary" />} 
           message="No delivery details have been recorded yet." 
           canEdit={hasPermission(PERMISSIONS.EDIT_DELIVERY)}
           onEdit={() => setEditingDelivery(true)}

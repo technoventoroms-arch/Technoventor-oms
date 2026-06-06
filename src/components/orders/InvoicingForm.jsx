@@ -63,12 +63,12 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
 
   return (
     <div className="space-y-8 pb-12">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
           <FileText className="w-48 h-48" />
         </div>
         
-        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+        <h3 className="text-lg font-bold text-text-primary mb-6 flex items-center gap-2">
           <FileText className="w-5 h-5 text-blue-400" />
           Order Invoicing Details
         </h3>
@@ -81,7 +81,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
               value={formData.invoiceNumber}
               onChange={handleChange}
               placeholder="INV/202X/..."
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500/50"
+              className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-blue-500/50"
             />
           </FormField>
 
@@ -91,15 +91,15 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
               name="invoiceDate"
               value={formData.invoiceDate}
               onChange={handleChange}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500/50"
+              className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-blue-500/50"
             />
           </FormField>
 
           {/* Invoice Attachment */}
           <div className="col-span-1 md:col-span-2 mt-4">
-            <label className="block text-sm font-semibold text-slate-400 mb-2">Invoice Attachment (PDF)</label>
+            <label className="block text-sm font-semibold text-text-secondary mb-2">Invoice Attachment (PDF)</label>
             <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-sm font-medium text-white cursor-pointer transition-colors">
+              <label className="flex items-center gap-2 px-4 py-2.5 bg-surface-raised dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-border rounded-xl text-sm font-medium text-text-primary cursor-pointer transition-colors">
                 <Upload className="w-4 h-4 text-blue-400" />
                 Upload Invoice PDF
                 <input
@@ -112,7 +112,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
               
               {formData.invoiceAttachment ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-emerald-400 flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                     <AlertCircle className="w-4 h-4" /> Uploaded successfully
                   </span>
                   <button 
@@ -129,16 +129,16 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
                   </button>
                 </div>
               ) : (
-                <span className="text-sm text-slate-500 italic">No file uploaded</span>
+                <span className="text-sm text-text-muted italic">No file uploaded</span>
               )}
             </div>
           </div>
 
           {/* E-Way Bill Attachment */}
           <div className="col-span-1 md:col-span-2 mt-2">
-            <label className="block text-sm font-semibold text-slate-400 mb-2">E-Way Bill Attachment (PDF)</label>
+            <label className="block text-sm font-semibold text-text-secondary mb-2">E-Way Bill Attachment (PDF)</label>
             <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-sm font-medium text-white cursor-pointer transition-colors">
+              <label className="flex items-center gap-2 px-4 py-2.5 bg-surface-raised dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-border rounded-xl text-sm font-medium text-text-primary cursor-pointer transition-colors">
                 <Upload className="w-4 h-4 text-orange-400" />
                 Upload E-Way Bill PDF
                 <input
@@ -151,7 +151,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
               
               {formData.ewayBillAttachment ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-emerald-400 flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                     <AlertCircle className="w-4 h-4" /> Uploaded successfully
                   </span>
                   <button 
@@ -168,7 +168,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
                   </button>
                 </div>
               ) : (
-                <span className="text-sm text-slate-500 italic">No file uploaded</span>
+                <span className="text-sm text-text-muted italic">No file uploaded</span>
               )}
             </div>
           </div>
@@ -180,7 +180,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
                 value={formData.remarks}
                 onChange={handleChange}
                 placeholder="Any additional notes regarding the invoice..."
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500/50"
+                className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-blue-500/50"
                 rows={3}
               />
             </FormField>
@@ -191,7 +191,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
       <div className="flex justify-end gap-3 mt-8">
         <button
           onClick={onCancel}
-          className="px-6 py-2.5 border border-slate-700 text-slate-300 font-medium rounded-xl hover:bg-slate-800 transition-colors"
+          className="px-6 py-2.5 border border-border text-text-secondary font-medium rounded-xl hover:bg-surface-raised transition-colors"
         >
           Cancel
         </button>
@@ -200,7 +200,7 @@ export function InvoicingForm({ initialData = {}, onSave, onCancel }) {
           disabled={isSubmitting}
           className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-colors shadow-lg shadow-blue-500/20 flex items-center gap-2 disabled:opacity-50"
         >
-          {isSubmitting ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : <FileText className="w-4 h-4" />}
+          {isSubmitting ? <span className="w-4 h-4 btn-spinner"></span> : <FileText className="w-4 h-4" />}
           {isSubmitting ? 'Saving...' : 'Save Invoice Details'}
         </button>
       </div>

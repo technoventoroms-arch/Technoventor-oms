@@ -10,3 +10,4 @@ export * from './InfoCard';
 export * from './EmptyState';
 export * from './ToggleSwitch';
 export * from './Toast';
+export * from './ThemeToggle';

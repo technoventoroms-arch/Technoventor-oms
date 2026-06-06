@@ -139,22 +139,22 @@ export function EditOrder({ order, currentUser, onSubmit, onCancel }) {
     <div className="space-y-8 pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-white bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-text-primary bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
             Edit Order: {order.id}
           </h2>
-          <p className="text-slate-400">Modify existing project and order details</p>
+          <p className="text-text-secondary">Modify existing project and order details</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-8 shadow-xl">
+        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-border rounded-2xl p-8 shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FormField label="System Order ID" icon={<Tag />}>
                 <input
                   type="text"
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/30 font-mono"
+                  className="w-full bg-surface-raised border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-amber-500/30 font-mono"
                   placeholder="e.g. ORD-2024-001"
                   required
                 />
@@ -164,13 +164,13 @@ export function EditOrder({ order, currentUser, onSubmit, onCancel }) {
                   type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                  className="w-full bg-surface-raised border border-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                   placeholder="e.g. Mumbai HQ Infrastructure"
                   required
                 />
               </FormField>
               <div className="flex flex-col justify-end">
-                 <p className="text-sm text-slate-500 mb-1">Status</p>
+                 <p className="text-sm text-text-muted mb-1">Status</p>
                  <div className="px-4 py-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-400 font-medium inline-flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     Editing Existing Order
@@ -196,37 +196,37 @@ export function EditOrder({ order, currentUser, onSubmit, onCancel }) {
         />
 
         <div className="flex flex-col lg:flex-row gap-8">
-           <div className="flex-1 bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-              <h4 className="font-semibold text-slate-300 mb-4 flex items-center gap-2">
+           <div className="flex-1 bg-surface border border-border rounded-2xl p-6">
+              <h4 className="font-semibold text-text-secondary mb-4 flex items-center gap-2">
                  <ClipboardList className="w-4 h-4 text-amber-400" />
                  Order Notes
               </h4>
               <textarea 
                 placeholder="Additional instructions or notes for this order..."
-                className="w-full h-32 bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+                className="w-full h-32 bg-surface-raised border border-border rounded-xl p-4 text-text-secondary text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/30"
               />
            </div>
            
-           <div className="w-full lg:w-96 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl">
+           <div className="w-full lg:w-96 bg-gradient-to-br from-slate-800 to-slate-900 border border-border rounded-2xl p-6 shadow-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-amber-500/20 rounded-lg">
                    <DollarSign className="w-5 h-5 text-amber-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white">6. Summary</h3>
+                <h3 className="text-xl font-bold text-text-primary">6. Summary</h3>
               </div>
               
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-slate-400">
+                <div className="flex justify-between items-center text-text-secondary">
                   <span className="text-sm">Sub Total</span>
                   <span className="font-mono">₹{subTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex justify-between items-center text-slate-400">
+                <div className="flex justify-between items-center text-text-secondary">
                   <span className="text-sm">GST Amount</span>
                   <span className="font-mono">+ ₹{gstTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
                 <div className="h-px bg-slate-700 my-2"></div>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-white">Grand Total</span>
+                  <span className="text-lg font-bold text-text-primary">Grand Total</span>
                   <span className="text-2xl font-black text-amber-400 font-mono">₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
@@ -238,7 +238,7 @@ export function EditOrder({ order, currentUser, onSubmit, onCancel }) {
                   className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-75 disabled:pointer-events-none"
                 >
                   {isSubmitting ? (
-                    <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+                    <span className="w-5 h-5 btn-spinner"></span>
                   ) : (
                     <ClipboardList className="w-5 h-5" />
                   )}
@@ -247,7 +247,7 @@ export function EditOrder({ order, currentUser, onSubmit, onCancel }) {
                 <button 
                   type="button" 
                   onClick={onCancel} 
-                  className="w-full py-3 text-slate-400 hover:text-white transition-colors text-sm font-medium"
+                  className="w-full py-3 text-text-secondary hover:text-text-primary transition-colors text-sm font-medium"
                 >
                   Cancel and Discard
                 </button>

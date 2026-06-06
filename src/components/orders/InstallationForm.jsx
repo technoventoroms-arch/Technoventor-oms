@@ -15,22 +15,22 @@ const InstallationForm = ({ initialData, onSave, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="bg-surface backdrop-blur-sm border border-border rounded-2xl p-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Installed By */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
             Installed By
           </label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <User className="h-4 w-4 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+              <User className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
             </div>
             <input
               type="text"
               value={formData.installedBy}
               onChange={(e) => setFormData({ ...formData, installedBy: e.target.value })}
-              className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
+              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
               placeholder="Technician/Team Name"
               required
             />
@@ -39,18 +39,18 @@ const InstallationForm = ({ initialData, onSave, onCancel }) => {
 
         {/* Site Contact */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
             Site Contact
           </label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Phone className="h-4 w-4 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+              <Phone className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
             </div>
             <input
               type="text"
               value={formData.siteContact}
               onChange={(e) => setFormData({ ...formData, siteContact: e.target.value })}
-              className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
+              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
               placeholder="Name or Phone Number"
               required
             />
@@ -59,18 +59,18 @@ const InstallationForm = ({ initialData, onSave, onCancel }) => {
 
         {/* Installation Date */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
             Installation Date
           </label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Calendar className="h-4 w-4 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+              <Calendar className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
             </div>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all [color-scheme:dark]"
+              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 input-field pl-11"
               required
             />
           </div>
@@ -79,27 +79,27 @@ const InstallationForm = ({ initialData, onSave, onCancel }) => {
 
       {/* Remarks */}
       <div className="space-y-2">
-        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+        <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
           Remarks
         </label>
         <div className="relative group">
           <div className="absolute top-3 left-4 pointer-events-none">
-            <FileText className="h-4 w-4 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+            <FileText className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
           </div>
           <textarea
             value={formData.remarks}
             onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-            className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all min-h-[100px] resize-none"
+            className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all min-h-[100px] resize-none"
             placeholder="Any specific installation notes..."
           />
         </div>
       </div>
 
-      <div className="flex gap-3 pt-4 border-t border-slate-800">
+      <div className="flex gap-3 pt-4 border-t border-border">
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-all active:scale-[0.98]"
+          className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-raised dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-text-secondary rounded-xl font-bold transition-all active:scale-[0.98]"
         >
           <X className="w-4 h-4" /> Cancel
         </button>

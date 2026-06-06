@@ -12,7 +12,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
             type="text"
             value={customerDetails.name}
             onChange={(e) => setCustomerDetails({...customerDetails, name: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             required
           />
         </FormField>
@@ -22,7 +22,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
             <select
               value={customerDetails.type}
               onChange={(e) => setCustomerDetails({...customerDetails, type: e.target.value})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             >
               {CUSTOMER_TYPES.map(type => <option key={type} value={type}>{type}</option>)}
             </select>
@@ -32,7 +32,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
               type="text"
               value={customerDetails.gstNumber}
               onChange={(e) => setCustomerDetails({...customerDetails, gstNumber: e.target.value.toUpperCase()})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
               placeholder="27AAAAA0000A1Z5"
             />
           </FormField>
@@ -66,12 +66,12 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
               }}
             />
             <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-            <span className="ml-3 text-sm font-medium text-slate-400">Shipping same as Billing</span>
+            <span className="ml-3 text-sm font-medium text-text-secondary">Shipping same as Billing</span>
           </label>
         </div>
 
         {!customerDetails.sameAsBilling && (
-          <div className="pt-4 border-t border-slate-800/30 mt-4">
+          <div className="pt-4 border-t border-border mt-4">
             <AddressFields 
               labelPrefix="Shipping "
               fields={customerDetails.shippingAddress}
@@ -88,7 +88,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
               type="text"
               value={customerDetails.contactPerson}
               onChange={(e) => setCustomerDetails({...customerDetails, contactPerson: e.target.value})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             />
           </FormField>
           <FormField label="Contact Number">
@@ -96,7 +96,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
               type="text"
               value={customerDetails.contactNumber}
               onChange={(e) => setCustomerDetails({...customerDetails, contactNumber: e.target.value})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             />
           </FormField>
         </div>
@@ -105,7 +105,7 @@ export function CustomerDetailsSection({ customerDetails, setCustomerDetails }) 
             type="email"
             value={customerDetails.email}
             onChange={(e) => setCustomerDetails({...customerDetails, email: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             placeholder="contact@example.com"
           />
         </FormField>

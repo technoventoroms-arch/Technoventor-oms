@@ -116,7 +116,7 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
     }
   };
 
-  const inputCls = "w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/40";
+  const inputCls = "w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/40";
 
   const totalPOs = purchaseOrders.length;
   const assignedCount = purchaseOrders.reduce((sum, po) => sum + po.boqItemIds.length, 0);
@@ -125,13 +125,13 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
     <div className="space-y-3 pb-20">
       {/* Header */}
       <div className="flex items-center gap-3 mb-5 px-1">
-        <div className="p-2 bg-emerald-500/10 rounded-xl"><Package className="w-5 h-5 text-emerald-400" /></div>
+        <div className="p-2 bg-emerald-500/10 rounded-xl"><Package className="w-5 h-5 text-emerald-700 dark:text-emerald-400" /></div>
         <div>
-          <h2 className="text-base font-bold text-white">Purchase Orders — Vendor Grouped</h2>
-          <p className="text-xs text-slate-400">Create POs per vendor. Assign multiple BOQ items to a single PO to avoid repetition.</p>
+          <h2 className="text-base font-bold text-text-primary">Purchase Orders — Vendor Grouped</h2>
+          <p className="text-xs text-text-secondary">Create POs per vendor. Assign multiple BOQ items to a single PO to avoid repetition.</p>
         </div>
         <div className="ml-auto flex items-center gap-3">
-          <div className="text-xs px-3 py-1.5 bg-slate-800 rounded-lg text-slate-400 border border-slate-700">
+          <div className="text-xs px-3 py-1.5 bg-surface-raised dark:bg-slate-800 rounded-lg text-text-secondary border border-border">
             {totalPOs} PO{totalPOs !== 1 ? 's' : ''} • {assignedCount}/{shortItems.length} items assigned
           </div>
         </div>
@@ -142,7 +142,7 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
         <div className="bg-amber-500/5 border border-amber-500/20 rounded-xl p-4 flex items-start gap-3 mb-4">
           <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
           <div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-text-secondary">
               <strong className="text-amber-400">{shortItems.length} item(s)</strong> need procurement (Short Qty &gt; 0). Assign them to POs below.
             </p>
             <div className="flex flex-wrap gap-2 mt-2">
@@ -150,8 +150,8 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                 const isAssigned = purchaseOrders.some(po => po.boqItemIds.includes(item.id));
                 return (
                   <span key={item.id} className={`text-[10px] font-bold px-2 py-1 rounded-lg border ${isAssigned
-                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                    : 'bg-slate-800 text-slate-400 border-slate-700'
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20'
+                    : 'bg-surface-raised dark:bg-slate-800 text-text-secondary border-border'
                     }`}>
                     {item.name} ({item.shortQty} {item.unit})
                     {isAssigned && <CheckCircle2 className="w-3 h-3 inline ml-1" />}
@@ -182,26 +182,26 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
         const isLocked = poKey && escalatedPoNumbers.has(poKey) && !isAdmin;
 
         return (
-          <div key={po.id} className={`border rounded-2xl overflow-hidden transition-all duration-200 ${isLocked ? 'border-blue-500/20 opacity-80' : isExpanded ? 'border-emerald-500/30 shadow-lg shadow-emerald-500/5' : 'border-slate-800 hover:border-slate-700'}`}>
+          <div key={po.id} className={`border rounded-2xl overflow-hidden transition-all duration-200 ${isLocked ? 'border-blue-500/20 opacity-80' : isExpanded ? 'border-emerald-500/30 shadow-lg shadow-emerald-500/5' : 'border-border hover:border-border'}`}>
             {/* PO Header */}
             <button
               onClick={() => !isLocked && setExpandedPO(isExpanded ? null : po.id)}
-              className={`w-full flex items-center gap-4 px-5 py-4 bg-slate-900/50 transition-colors text-left ${isLocked ? 'cursor-default' : 'hover:bg-slate-800/40'}`}
+              className={`w-full flex items-center gap-4 px-5 py-4 bg-surface transition-colors text-left ${isLocked ? 'cursor-default' : 'hover:bg-surface-raised'}`}
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center text-sm font-black text-emerald-400 flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-400 flex-shrink-0">
                 P{poIndex + 1}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-semibold text-white text-sm">
+                  <span className="font-semibold text-text-primary text-sm">
                     {po.vendorDetails?.name || 'New Purchase Order'}
                   </span>
                   {po.poDetails?.poNumber && (
-                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                    <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                       PO: {po.poDetails.poNumber}
                     </span>
                   )}
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-raised dark:bg-slate-800 text-text-secondary border border-border">
                     {assignedItems.length} item{assignedItems.length !== 1 ? 's' : ''}
                   </span>
                   {isLocked && (
@@ -212,31 +212,31 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                 </div>
                 <div className="flex items-center gap-3 mt-0.5">
                   {po.poDetails?.poValue && (
-                    <span className="text-xs text-emerald-400/70 font-mono">₹{Number(po.poDetails.poValue).toLocaleString('en-IN')}</span>
+                    <span className="text-xs text-emerald-700 dark:text-emerald-400/70 font-mono">₹{Number(po.poDetails.poValue).toLocaleString('en-IN')}</span>
                   )}
                   {assignedItems.length > 0 && (
-                    <span className="text-xs text-slate-500 truncate">{assignedItems.map(i => i.name).join(', ')}</span>
+                    <span className="text-xs text-text-muted truncate">{assignedItems.map(i => i.name).join(', ')}</span>
                   )}
                 </div>
               </div>
               {!isLocked && (
                 <button
                   onClick={(e) => { e.stopPropagation(); removePO(po.id); }}
-                  className="p-2 text-slate-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors flex-shrink-0"
+                  className="p-2 text-text-muted hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors flex-shrink-0"
                   title="Remove this PO"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               )}
-              {!isLocked && <ChevronDown className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />}
+              {!isLocked && <ChevronDown className={`w-5 h-5 text-text-secondary flex-shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />}
             </button>
 
             {/* Expanded PO Form */}
             {isExpanded && !isLocked && (
-              <div className="border-t border-slate-800/50 bg-slate-950/20 p-5 space-y-8">
+              <div className="border-t border-border bg-slate-50 dark:bg-slate-950/20 p-5 space-y-8">
                 {/* 1. Select BOQ Items for this PO */}
                 <div className="space-y-3">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
                     <span className="w-4 h-4 rounded bg-blue-500/10 flex items-center justify-center text-blue-400">1</span>
                     Select BOQ Items for this PO
                   </p>
@@ -249,22 +249,22 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                           key={item.id}
                           onClick={() => toggleItemInPO(po.id, item.id)}
                           className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all border ${isSelected
-                              ? 'bg-emerald-500/10 border-emerald-500/30 text-white'
+                              ? 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-white'
                               : isAssignedElsewhere
-                                ? 'bg-amber-500/5 border-amber-500/20 text-slate-400 hover:border-amber-500/40'
-                                : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white'
+                                ? 'bg-amber-500/5 border-amber-500/20 text-text-secondary hover:border-amber-500/40'
+                                : 'bg-surface border-border text-text-secondary hover:border-border hover:text-text-primary'
                             }`}
                         >
                           <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? 'bg-emerald-500 border-emerald-500' : isAssignedElsewhere ? 'border-amber-500/50' : 'border-slate-600'
                             }`}>
-                            {isSelected && <CheckCircle2 className="w-3 h-3 text-white" />}
+                            {isSelected && <CheckCircle2 className="w-3 h-3 text-text-primary" />}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              {item.parentItemIndex && <span className="text-slate-600 text-[10px]">└</span>}
-                              <span className={`text-sm font-medium block truncate ${item.parentItemIndex ? 'text-slate-400' : ''}`}>{item.name}</span>
+                              {item.parentItemIndex && <span className="text-text-muted text-[10px]">└</span>}
+                              <span className={`text-sm font-medium block truncate ${item.parentItemIndex ? 'text-text-secondary' : ''}`}>{item.name}</span>
                             </div>
-                            <span className="text-[10px] text-slate-500">
+                            <span className="text-[10px] text-text-muted">
                               Short: {item.shortQty} {item.unit}
                               {isAssignedElsewhere && <span className="text-amber-500/70 ml-2">(assigned to another PO - click to move here)</span>}
                             </span>
@@ -276,9 +276,9 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                 </div>
 
                 {/* 2. Vendor Details */}
-                <div className="space-y-4 pt-4 border-t border-slate-800/50">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                    <span className="w-4 h-4 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-400">2</span>
+                <div className="space-y-4 pt-4 border-t border-border">
+                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-4 h-4 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-700 dark:text-emerald-400">2</span>
                     Vendor Information
                   </p>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -289,8 +289,8 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                 </div>
 
                 {/* 3. PO Details */}
-                <div className="space-y-4 pt-4 border-t border-slate-800/50">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                <div className="space-y-4 pt-4 border-t border-border">
+                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
                     <span className="w-4 h-4 rounded bg-purple-500/10 flex items-center justify-center text-purple-400">3</span>
                     Purchase Order Details
                   </p>
@@ -321,8 +321,8 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
                 </div>
 
                 {/* 4. Payment & Delivery */}
-                <div className="space-y-4 pt-4 border-t border-slate-800/50">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                <div className="space-y-4 pt-4 border-t border-border">
+                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest flex items-center gap-2">
                     <span className="w-4 h-4 rounded bg-amber-500/10 flex items-center justify-center text-amber-400">4</span>
                     Payment & Delivery
                   </p>
@@ -365,21 +365,21 @@ export function ProcurementForm({ initialData, boqItems, onSave, onCancel, escal
       {/* Add PO button */}
       <button
         onClick={addNewPO}
-        className="w-full py-4 border-2 border-dashed border-slate-700 rounded-2xl text-slate-400 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all flex items-center justify-center gap-2 text-sm font-bold"
+        className="w-full py-4 border-2 border-dashed border-border rounded-2xl text-text-secondary hover:text-emerald-700 dark:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all flex items-center justify-center gap-2 text-sm font-bold"
       >
         <Plus className="w-4 h-4" />
         Add New Purchase Order (1 Vendor = 1 PO)
       </button>
 
       {/* Actions */}
-      <div className="flex flex-col lg:flex-row gap-4 items-center justify-end border-t border-slate-800 pt-8 mt-8">
-        <button onClick={onCancel} disabled={submittingAction} className="flex-1 lg:flex-none px-8 py-3 border border-slate-700 rounded-xl text-slate-300 font-semibold hover:bg-slate-800 disabled:opacity-50">Cancel</button>
-        <button onClick={() => handleSave('draft')} disabled={submittingAction} className="flex flex-1 lg:flex-none justify-center items-center gap-2 px-8 py-3 bg-slate-800 text-white rounded-xl font-semibold border border-slate-700 hover:bg-slate-700 disabled:opacity-50">
-          {submittingAction === 'draft' ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : null}
+      <div className="flex flex-col lg:flex-row gap-4 items-center justify-end border-t border-border pt-8 mt-8">
+        <button onClick={onCancel} disabled={submittingAction} className="flex-1 lg:flex-none px-8 py-3 border border-border rounded-xl text-text-secondary font-semibold hover:bg-surface-raised disabled:opacity-50">Cancel</button>
+        <button onClick={() => handleSave('draft')} disabled={submittingAction} className="flex flex-1 lg:flex-none justify-center items-center gap-2 px-8 py-3 bg-surface-raised dark:bg-slate-800 text-text-primary rounded-xl font-semibold border border-border hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50">
+          {submittingAction === 'draft' ? <span className="w-4 h-4 btn-spinner"></span> : null}
           {submittingAction === 'draft' ? 'Saving...' : 'Save Draft'}
         </button>
         <button onClick={() => handleSave('submit')} disabled={submittingAction} className="flex flex-1 lg:flex-none justify-center items-center gap-2 px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-black shadow-lg shadow-emerald-500/20 disabled:opacity-50">
-          {submittingAction === 'submit' ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : null}
+          {submittingAction === 'submit' ? <span className="w-4 h-4 btn-spinner"></span> : null}
           {submittingAction === 'submit' ? 'Submitting...' : 'Submit for Approval'}
         </button>
       </div>

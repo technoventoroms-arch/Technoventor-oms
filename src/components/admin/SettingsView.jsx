@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowRight, ShieldCheck, Key, User, CheckCircle2 } from 'lucide-react';
-import { ToggleSwitch, FormField } from '../common';
+import { ToggleSwitch, FormField, ThemeToggle } from '../common';
 import { PERMISSIONS } from '../../constants';
+import { STAGE_COLORS } from '../../constants/theme';
 
 export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
   const [newPassword, setNewPassword] = useState('');
@@ -29,24 +30,30 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <h2 className="text-3xl font-black text-white tracking-tight">System Settings</h2>
-        <p className="text-slate-400 mt-1 font-medium">Manage your profile and system configuration</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-black text-text-primary tracking-tight">System Settings</h2>
+          <p className="text-text-secondary mt-1 font-medium">Manage your profile and system configuration</p>
+        </div>
+        <div className="flex items-center gap-3 px-4 py-2 bg-surface border border-border rounded-xl">
+          <span className="text-xs font-bold text-text-muted uppercase tracking-wider">Theme</span>
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* 1. Account & Security (Available to everyone with Settings access) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
+          <h3 className="text-lg font-bold text-text-primary flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
             My Security
           </h3>
-          <p className="text-sm text-slate-500 mt-2">Update your login credentials and personal security settings.</p>
+          <p className="text-sm text-text-muted mt-2">Update your login credentials and personal security settings.</p>
         </div>
         
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 shadow-xl">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-1.5">
+          <div className="bg-surface border border-border rounded-2xl p-6 shadow-xl">
+            <h4 className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-6 flex items-center gap-1.5">
               <Key className="w-4 h-4" /> Change Password
             </h4>
             
@@ -57,7 +64,7 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
                     type="password" 
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500/40 transition-all placeholder:text-slate-700" 
+                    className="input-field py-3" 
                     placeholder="Enter new password"
                   />
                 </FormField>
@@ -66,20 +73,20 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
                     type="password" 
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500/40 transition-all placeholder:text-slate-700" 
+                    className="input-field py-3" 
                     placeholder="Confirm new password"
                   />
                 </FormField>
               </div>
 
               {status === 'error' && (
-                <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl font-medium animate-in slide-in-from-top-2">
+                <div className="p-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-sm rounded-xl font-medium animate-in slide-in-from-top-2">
                   ⚠️ Passwords do not match or are empty.
                 </div>
               )}
 
               <div className="flex items-center justify-between gap-4">
-                <div className="text-xs text-slate-500 max-w-[200px]">
+                <div className="text-xs text-text-muted max-w-[200px]">
                   Use at least 8 characters with a mix of letters and numbers.
                 </div>
                 <button 
@@ -88,7 +95,7 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
                   className={`px-8 py-3 rounded-xl font-black uppercase text-[11px] tracking-widest transition-all shadow-xl ${
                     status === 'saved' 
                       ? 'bg-emerald-500 text-white' 
-                      : 'bg-white text-slate-950 hover:shadow-white/20 active:scale-95'
+                      : 'bg-emerald-600 text-white hover:bg-emerald-700 active:scale-95'
                   }`}
                 >
                   {status === 'saving' ? 'Updating...' : status === 'saved' ? 'Password Updated!' : 'Update Password'}
@@ -97,8 +104,8 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
             </form>
           </div>
 
-          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-1.5">
+          <div className="bg-surface border border-border rounded-2xl p-6">
+            <h4 className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-6 flex items-center gap-1.5">
               <User className="w-4 h-4" /> Personal Profile
             </h4>
             <div className="flex items-center gap-4">
@@ -106,9 +113,9 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
                 {(currentUser?.name || '').split(' ').filter(Boolean).map(n => n[0]).join('')}
               </div>
               <div>
-                <p className="text-lg font-bold text-white leading-none">{currentUser?.name}</p>
-                <p className="text-sm text-slate-500 mt-1">{currentUser?.email}</p>
-                <span className="inline-block px-2.5 py-0.5 bg-slate-800 text-slate-400 text-[10px] uppercase font-bold tracking-widest rounded-full mt-2">
+                <p className="text-lg font-bold text-text-primary leading-none">{currentUser?.name}</p>
+                <p className="text-sm text-text-muted mt-1">{currentUser?.email}</p>
+                <span className="inline-block px-2.5 py-0.5 bg-surface-raised dark:bg-slate-800 text-text-secondary text-[10px] uppercase font-bold tracking-widest rounded-full mt-2">
                   {currentUser?.department} Department
                 </span>
               </div>
@@ -120,54 +127,54 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
       {/* 2. Global System Settings (Admin only) */}
       {hasPermission(PERMISSIONS.MANAGE_PERMISSIONS) && (
         <>
-          <div className="h-px bg-slate-800 my-10" />
+          <div className="h-px bg-surface-raised dark:bg-slate-800 my-10" />
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              <h3 className="text-lg font-bold text-text-primary flex items-center gap-2">
                 System Config
               </h3>
-              <p className="text-sm text-slate-500 mt-2">Admin level settings for global system behavior and automation.</p>
+              <p className="text-sm text-text-muted mt-2">Admin level settings for global system behavior and automation.</p>
             </div>
             
             <div className="lg:col-span-2 space-y-4">
-              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Automation & Notification</h4>
+              <div className="bg-surface border border-border rounded-2xl p-6">
+                <h4 className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-4">Automation & Notification</h4>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between py-3 border-b border-slate-800">
+                  <div className="flex items-center justify-between py-3 border-b border-border">
                     <div>
-                      <p className="text-white font-medium">Global Email Notifications</p>
-                      <p className="text-sm text-slate-400 text-[11px]">System-wide notifications for all departments</p>
+                      <p className="text-text-primary font-medium">Global Email Notifications</p>
+                      <p className="text-sm text-text-secondary text-[11px]">System-wide notifications for all departments</p>
                     </div>
                     <ToggleSwitch enabled={true} />
                   </div>
-                  <div className="flex items-center justify-between py-3 border-b border-slate-800">
+                  <div className="flex items-center justify-between py-3 border-b border-border">
                     <div>
-                      <p className="text-white font-medium">Auto-escalation Logic</p>
-                      <p className="text-sm text-slate-400 text-[11px]">Escalate orders held in stage for &gt;48h</p>
+                      <p className="text-text-primary font-medium">Auto-escalation Logic</p>
+                      <p className="text-sm text-text-secondary text-[11px]">Escalate orders held in stage for &gt;48h</p>
                     </div>
                     <ToggleSwitch enabled={false} />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+              <div className="bg-surface border border-border rounded-2xl p-6">
+                <h4 className="text-sm font-bold text-text-secondary uppercase tracking-widest mb-4 flex items-center gap-2">
                   Workflow Visualization
                 </h4>
-                <div className="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                <div className="p-4 bg-white dark:bg-slate-950 rounded-xl border border-border">
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest flex-wrap">
-                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">New</span>
-                    <ArrowRight className="w-3 h-3 text-slate-600" />
-                    <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Procurement</span>
-                    <ArrowRight className="w-3 h-3 text-slate-600" />
-                    <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded">Finance</span>
-                    <ArrowRight className="w-3 h-3 text-slate-600" />
-                    <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded">Stores</span>
-                    <ArrowRight className="w-3 h-3 text-slate-600" />
-                    <span className="px-2 py-1 bg-orange-500/20 text-orange-400 rounded">Dispatch</span>
-                    <ArrowRight className="w-3 h-3 text-slate-600" />
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-green-500">Completed</span>
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.new}`}>New</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.procurement}`}>Procurement</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.finance}`}>Finance</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.stores_inward}`}>Stores</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.dispatch}`}>Dispatch</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.completed}`}>Completed</span>
                   </div>
                 </div>
               </div>

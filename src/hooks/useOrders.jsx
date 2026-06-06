@@ -24,7 +24,7 @@ export function useOrders(currentUser) {
         type: 'info',
         message: (
           <span>
-            <span className="font-mono text-emerald-400 font-bold">{h.orderId}</span>: {h.action}
+            <span className="font-mono text-emerald-700 dark:text-emerald-400 font-bold">{h.orderId}</span>: {h.action}
             <span className="block text-[10px] text-slate-500 mt-0.5">by {h.by} ({h.department})</span>
           </span>
         ),

@@ -47,35 +47,35 @@ export function PermissionManagement({ users, onUpdateUser, currentUser }) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Permission Management</h2>
-        <p className="text-slate-400">Control what each user can see and do</p>
+        <h2 className="text-2xl font-bold text-text-primary">Permission Management</h2>
+        <p className="text-text-secondary">Control what each user can see and do</p>
       </div>
 
       <div className="grid grid-cols-3 gap-6">
         {/* User List */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-          <div className="p-4 border-b border-slate-800">
-            <h3 className="font-semibold text-white">Select User</h3>
+        <div className="bg-surface border border-border rounded-xl overflow-hidden">
+          <div className="p-4 border-b border-border">
+            <h3 className="font-semibold text-text-primary">Select User</h3>
           </div>
-          <div className="divide-y divide-slate-800 max-h-[600px] overflow-y-auto">
+          <div className="divide-y divide-border max-h-[600px] overflow-y-auto">
             {users.filter(u => u.id !== currentUser.id).map(user => (
               <button
                 key={user.id}
                 onClick={() => selectUser(user)}
-                className={`w-full p-4 text-left hover:bg-slate-800/50 transition-colors ${selectedUser?.id === user.id ? 'bg-emerald-500/10 border-l-2 border-emerald-500' : ''}`}
+                className={`w-full p-4 text-left hover:bg-surface-raised transition-colors ${selectedUser?.id === user.id ? 'bg-emerald-500/10 border-l-2 border-emerald-500' : ''}`}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-semibold text-sm">
                     {user.name.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-medium text-white">{user.name}</p>
-                    <p className="text-xs text-slate-400 capitalize">{user.department}</p>
+                    <p className="font-medium text-text-primary">{user.name}</p>
+                    <p className="text-xs text-text-secondary capitalize">{user.department}</p>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center gap-2">
-                  <Key className="w-3 h-3 text-slate-500" />
-                  <span className="text-xs text-slate-500">{user.permissions?.length || 0} permissions</span>
+                  <Key className="w-3 h-3 text-text-muted" />
+                  <span className="text-xs text-text-muted">{user.permissions?.length || 0} permissions</span>
                 </div>
               </button>
             ))}
@@ -83,18 +83,18 @@ export function PermissionManagement({ users, onUpdateUser, currentUser }) {
         </div>
 
         {/* Permission Editor */}
-        <div className="col-span-2 bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
+        <div className="col-span-2 bg-surface border border-border rounded-xl overflow-hidden">
           {selectedUser ? (
             <>
-              <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+              <div className="p-4 border-b border-border flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-white">Permissions for {selectedUser.name}</h3>
-                  <p className="text-sm text-slate-400">{userPermissions.length} permissions selected</p>
+                  <h3 className="font-semibold text-text-primary">Permissions for {selectedUser.name}</h3>
+                  <p className="text-sm text-text-secondary">{userPermissions.length} permissions selected</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <select
                     onChange={(e) => e.target.value && applyTemplate(e.target.value)}
-                    className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"
+                    className="bg-surface-raised dark:bg-slate-800 border border-border rounded-lg px-3 py-2 text-sm text-text-primary"
                     defaultValue=""
                   >
                     <option value="">Apply Template...</option>
@@ -119,10 +119,10 @@ export function PermissionManagement({ users, onUpdateUser, currentUser }) {
                   const someSelected = selectedCount > 0 && !allSelected;
 
                   return (
-                    <div key={groupName} className="border border-slate-700 rounded-lg overflow-hidden">
+                    <div key={groupName} className="border border-border rounded-lg overflow-hidden">
                       <button
                         onClick={() => toggleGroup(groupName)}
-                        className="w-full p-4 flex items-center justify-between bg-slate-800/50 hover:bg-slate-800"
+                        className="w-full p-4 flex items-center justify-between bg-surface-raised hover:bg-surface-raised"
                       >
                         <div className="flex items-center gap-3">
                           <div 
@@ -133,34 +133,34 @@ export function PermissionManagement({ users, onUpdateUser, currentUser }) {
                               'border-slate-600'
                             }`}
                           >
-                            {(allSelected || someSelected) && <Check className="w-3 h-3 text-white" />}
+                            {(allSelected || someSelected) && <Check className="w-3 h-3 text-text-primary" />}
                           </div>
-                          <span className="font-medium text-white">{groupName}</span>
-                          <span className="text-xs text-slate-400">({selectedCount}/{permissions.length})</span>
+                          <span className="font-medium text-text-primary">{groupName}</span>
+                          <span className="text-xs text-text-secondary">({selectedCount}/{permissions.length})</span>
                         </div>
                         {expandedGroups[groupName] ? (
-                          <ChevronUp className="w-5 h-5 text-slate-400" />
+                          <ChevronUp className="w-5 h-5 text-text-secondary" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-slate-400" />
+                          <ChevronDown className="w-5 h-5 text-text-secondary" />
                         )}
                       </button>
                       
                       {expandedGroups[groupName] && (
-                        <div className="p-4 space-y-3 bg-slate-900/50">
+                        <div className="p-4 space-y-3 bg-surface">
                           {permissions.map(permission => (
                             <label
                               key={permission.key}
-                              className="flex items-start gap-3 cursor-pointer hover:bg-slate-800/30 p-2 rounded-lg -m-2"
+                              className="flex items-start gap-3 cursor-pointer hover:bg-surface-raised p-2 rounded-lg -m-2"
                             >
                               <input
                                 type="checkbox"
                                 checked={userPermissions.includes(permission.key)}
                                 onChange={() => togglePermission(permission.key)}
-                                className="mt-1 w-4 h-4 rounded border-slate-600 text-emerald-500 focus:ring-emerald-500/50 bg-slate-800"
+                                className="mt-1 w-4 h-4 rounded border-slate-600 text-emerald-500 focus:ring-emerald-500/50 bg-surface-raised dark:bg-slate-800"
                               />
                               <div>
-                                <p className="text-sm font-medium text-white">{permission.label}</p>
-                                <p className="text-xs text-slate-400">{permission.description}</p>
+                                <p className="text-sm font-medium text-text-primary">{permission.label}</p>
+                                <p className="text-xs text-text-secondary">{permission.description}</p>
                               </div>
                             </label>
                           ))}
@@ -172,7 +172,7 @@ export function PermissionManagement({ users, onUpdateUser, currentUser }) {
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center h-96 text-slate-400">
+            <div className="flex flex-col items-center justify-center h-96 text-text-secondary">
               <UserCog className="w-16 h-16 mb-4 opacity-50" />
               <p className="text-lg">Select a user to manage permissions</p>
               <p className="text-sm">Click on any user from the list</p>

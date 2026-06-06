@@ -593,15 +593,15 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-lg">
-          <ChevronRight className="w-5 h-5 text-slate-400 rotate-180" />
+        <button onClick={onBack} className="p-2 hover:bg-surface-raised rounded-lg">
+          <ChevronRight className="w-5 h-5 text-text-secondary rotate-180" />
         </button>
         <div className="flex-1">
           <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-bold text-white">{hasPermission(PERMISSIONS.VIEW_PROJECT_NAME) ? order.projectName : 'Restricted Info'}</h2>
+            <h2 className="text-2xl font-bold text-text-primary">{hasPermission(PERMISSIONS.VIEW_PROJECT_NAME) ? order.projectName : 'Restricted Info'}</h2>
             <StageTag stage={order.currentStage} />
           </div>
-          <p className="text-slate-400">{order.id} • {hasPermission(PERMISSIONS.VIEW_CUSTOMER_NAME) ? (order.customerDetails?.name || 'N/A') : 'Restricted'}</p>
+          <p className="text-text-secondary">{order.id} • {hasPermission(PERMISSIONS.VIEW_CUSTOMER_NAME) ? (order.customerDetails?.name || 'N/A') : 'Restricted'}</p>
         </div>
         {canEscalate && getPreviousStage() && (
           <button
@@ -617,7 +617,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-lg shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
             {isEscalating === `prev-${getPreviousStage()}` ? (
-              <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+              <span className="w-4 h-4 btn-spinner"></span>
             ) : (
               <ChevronRight className="w-4 h-4 rotate-180" />
             )}
@@ -638,7 +638,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-lg shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
             {isEscalating === `next-${getNextStage()}` ? (
-              <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+              <span className="w-4 h-4 btn-spinner"></span>
             ) : (
               <Send className="w-4 h-4" />
             )}
@@ -659,7 +659,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-lg shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
             {isEscalating === `straight-dispatch` ? (
-              <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+              <span className="w-4 h-4 btn-spinner"></span>
             ) : (
               <Zap className="w-4 h-4" />
             )}
@@ -669,7 +669,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
         {hasPermission(PERMISSIONS.EDIT_ORDERS) && (
           <button
             onClick={onEdit}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold rounded-lg hover:bg-amber-500 hover:text-white transition-all shadow-lg hover:shadow-amber-500/20 active:scale-[0.98]"
+            className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold rounded-lg hover:bg-amber-500 hover:text-text-primary transition-all shadow-lg hover:shadow-amber-500/20 active:scale-[0.98]"
           >
             <Edit2 className="w-4 h-4" />
             Edit
@@ -688,20 +688,20 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
               }
             }}
             disabled={isDeletingOrder}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-lg hover:shadow-red-500/20 active:scale-[0.98] disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-lg hover:bg-red-500 hover:text-text-primary transition-all shadow-lg hover:shadow-red-500/20 active:scale-[0.98] disabled:opacity-50"
           >
-            {isDeletingOrder ? <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> : <Trash2 className="w-4 h-4" />}
+            {isDeletingOrder ? <span className="w-4 h-4 btn-spinner"></span> : <Trash2 className="w-4 h-4" />}
             {isDeletingOrder ? 'Deleting...' : 'Delete'}
           </button>
         )}
       </div>
 
-      <div className="flex gap-2 border-b border-slate-800">
+      <div className="flex gap-2 border-b border-border">
         {tabs.map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2.5 text-sm font-medium transition-colors capitalize ${activeTab === tab ? 'text-emerald-400 border-b-2 border-emerald-400' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2.5 text-sm font-medium transition-colors capitalize ${activeTab === tab ? 'text-emerald-700 dark:text-emerald-400 border-b-2 border-emerald-400' : 'text-text-secondary hover:text-text-primary'
               }`}
           >
             {tab}
@@ -709,7 +709,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
         ))}
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-8">
+      <div className="bg-surface border border-border rounded-xl p-8">
         {activeTab === 'overview' && (
           <OverviewTab order={order} hasPermission={hasPermission} />
         )}
@@ -722,8 +722,8 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
           <div>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-lg font-semibold text-white">Stores — Inventory Check</h3>
-                <p className="text-xs text-slate-400 mt-1">Review stock and set Short Qty for items that need procurement</p>
+                <h3 className="text-lg font-semibold text-text-primary">Stores — Inventory Check</h3>
+                <p className="text-xs text-text-secondary mt-1">Review stock and set Short Qty for items that need procurement</p>
               </div>
               {hasPermission(PERMISSIONS.EDIT_STORES) && !editingInventory && (
                 <button onClick={() => setEditingInventory(true)} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/30 rounded-xl text-sm font-semibold">
@@ -743,25 +743,25 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-[600px]">
                     <thead>
-                      <tr className="border-b border-slate-800">
-                        <th className="text-left p-3 text-[10px] font-bold text-slate-500 uppercase">#</th>
-                        <th className="text-left p-3 text-[10px] font-bold text-slate-500 uppercase">Item</th>
-                        <th className="text-center p-3 text-[10px] font-bold text-slate-500 uppercase">BOQ Qty</th>
+                      <tr className="border-b border-border">
+                        <th className="text-left p-3 text-[10px] font-bold text-text-muted uppercase">#</th>
+                        <th className="text-left p-3 text-[10px] font-bold text-text-muted uppercase">Item</th>
+                        <th className="text-center p-3 text-[10px] font-bold text-text-muted uppercase">BOQ Qty</th>
                         <th className="text-center p-3 text-[10px] font-bold text-amber-400 uppercase">Short Qty</th>
-                        <th className="text-center p-3 text-[10px] font-bold text-emerald-400 uppercase">Available</th>
+                        <th className="text-center p-3 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase">Available</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/50">
+                    <tbody className="divide-y divide-border">
                       {(order.items || []).map((item, idx) => (
-                        <tr key={item.id} className={`${item.shortQty > 0 ? 'bg-amber-500/[0.03]' : ''} ${item.parentItemIndex ? 'bg-slate-800/20' : ''}`}>
-                          <td className="p-3 text-sm text-slate-500 font-mono">{item.parentItemIndex ? '└' : idx + 1}</td>
+                        <tr key={item.id} className={`${item.shortQty > 0 ? 'bg-amber-500/[0.03]' : ''} ${item.parentItemIndex ? 'bg-surface-raised dark:bg-slate-800/20' : ''}`}>
+                          <td className="p-3 text-sm text-text-muted font-mono">{item.parentItemIndex ? '└' : idx + 1}</td>
                           <td className="p-3">
-                            <span className={`text-sm font-medium ${item.parentItemIndex ? 'text-slate-400 pl-4' : 'text-white'}`}>{item.name}</span>
-                            <span className="text-[10px] text-slate-500 font-mono ml-2">{item.itemCode || ''}</span>
+                            <span className={`text-sm font-medium ${item.parentItemIndex ? 'text-text-secondary pl-4' : 'text-text-primary'}`}>{item.name}</span>
+                            <span className="text-[10px] text-text-muted font-mono ml-2">{item.itemCode || ''}</span>
                           </td>
-                          <td className="p-3 text-center text-sm text-white font-mono">{item.quantity} {item.unit}</td>
+                          <td className="p-3 text-center text-sm text-text-primary font-mono">{item.quantity} {item.unit}</td>
                           <td className="p-3 text-center text-sm font-mono font-bold text-amber-400">{item.shortQty || 0}</td>
-                          <td className="p-3 text-center text-sm font-mono text-emerald-400">{Math.round(item.quantity - (item.shortQty || 0))}</td>
+                          <td className="p-3 text-center text-sm font-mono text-emerald-700 dark:text-emerald-400">{Math.round(item.quantity - (item.shortQty || 0))}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -770,7 +770,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
                 {(order.items || []).some(i => i.shortQty > 0) && (
                   <div className="bg-amber-500/5 border border-amber-500/20 rounded-xl p-3 flex items-center gap-2">
                     <Package className="w-4 h-4 text-amber-400" />
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-text-secondary">
                       <strong className="text-amber-400">{(order.items || []).filter(i => i.shortQty > 0).length} item(s)</strong> with shortage — will be sent to Procurement when escalated.
                     </p>
                   </div>

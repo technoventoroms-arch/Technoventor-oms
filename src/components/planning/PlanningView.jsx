@@ -6,10 +6,10 @@ import {
 import { PERMISSIONS } from '../../constants';
 
 const STATUS_STYLE = {
-  Completed: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
-  'In Progress': 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
-  Pending: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-  'Not Applicable': 'bg-slate-500/10 text-slate-400 border border-slate-500/20',
+  Completed: 'bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20',
+  'In Progress': 'bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20',
+  Pending: 'bg-amber-50 text-amber-800 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20',
+  'Not Applicable': 'bg-slate-100 text-slate-600 border border-slate-300 dark:bg-slate-500/10 dark:text-text-secondary dark:border-slate-500/20',
 };
 
 function StatusBadge({ status }) {
@@ -30,16 +30,16 @@ function PlanningStats({ orders }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {[
-        { label: 'Total Orders', value: orders.length, icon: <Package className="w-5 h-5" />, color: 'text-slate-300' },
+        { label: 'Total Orders', value: orders.length, icon: <Package className="w-5 h-5" />, color: 'text-text-secondary' },
         { label: 'Plans Created', value: withPlanning.length, icon: <ClipboardList className="w-5 h-5" />, color: 'text-blue-400' },
         { label: 'Delivery Set', value: withDelivery.length, icon: <CalendarDays className="w-5 h-5" />, color: 'text-amber-400' },
-        { label: 'Fully Planned', value: completed.length, icon: <CheckCircle2 className="w-5 h-5" />, color: 'text-emerald-400' },
+        { label: 'Fully Planned', value: completed.length, icon: <CheckCircle2 className="w-5 h-5" />, color: 'text-emerald-700 dark:text-emerald-400' },
       ].map(stat => (
-        <div key={stat.label} className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+        <div key={stat.label} className="bg-surface border border-border rounded-xl p-4 flex items-center gap-4">
           <div className={`${stat.color} opacity-70`}>{stat.icon}</div>
           <div>
             <p className={`text-2xl font-black ${stat.color}`}>{stat.value}</p>
-            <p className="text-xs text-slate-500 font-semibold uppercase tracking-wide mt-0.5">{stat.label}</p>
+            <p className="text-xs text-text-muted font-semibold uppercase tracking-wide mt-0.5">{stat.label}</p>
           </div>
         </div>
       ))}
@@ -71,8 +71,8 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
             <ClipboardList className="w-6 h-6 text-emerald-300" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">Planning Department</h2>
-            <p className="text-slate-300 text-sm mt-0.5">Manage delivery schedules, BOQ timelines & project milestones</p>
+            <h2 className="text-2xl font-bold text-text-primary">Planning Department</h2>
+            <p className="text-text-secondary text-sm mt-0.5">Manage delivery schedules, BOQ timelines & project milestones</p>
           </div>
         </div>
       </div>
@@ -83,9 +83,9 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
       {/* Search & Filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
           <input
-            className="w-full bg-slate-900/60 border border-slate-800 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/40"
+            className="w-full bg-slate-50 dark:bg-slate-900/60 border border-border rounded-xl pl-9 pr-4 py-2.5 text-sm text-text-primary placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/40"
             placeholder="Search by order ID or project name..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -98,7 +98,7 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
               onClick={() => setFilter(f)}
               className={`px-4 py-2.5 rounded-xl text-sm font-semibold capitalize transition-all ${filter === f
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
-                  : 'bg-slate-900/50 border border-slate-800 text-slate-400 hover:text-white'
+                  : 'bg-surface border border-border text-text-secondary hover:text-text-primary'
                 }`}
             >
               {f}
@@ -109,10 +109,10 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
 
       {/* Orders List */}
       {filtered.length === 0 ? (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-12 text-center">
+        <div className="bg-surface border border-border rounded-xl p-12 text-center">
           <ClipboardList className="w-16 h-16 mx-auto mb-4 text-slate-700" />
-          <h3 className="text-xl font-semibold text-white mb-2">No Orders Found</h3>
-          <p className="text-slate-400 text-sm">Try changing your search or filter.</p>
+          <h3 className="text-xl font-semibold text-text-primary mb-2">No Orders Found</h3>
+          <p className="text-text-secondary text-sm">Try changing your search or filter.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -136,11 +136,11 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
             return (
               <div
                 key={order.id}
-                className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-all"
+                className="bg-surface border border-border rounded-xl overflow-hidden hover:border-border transition-all"
               >
                 {/* Order Header Row */}
                 <div
-                  className="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-800/30 transition-colors"
+                  className="flex items-center justify-between p-5 cursor-pointer hover:bg-surface-raised transition-colors"
                   onClick={() => onSelectOrder(order, 'planning')}
                 >
                   <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -149,14 +149,14 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
                       }`} />
                     <div className="min-w-0">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <span className="font-mono text-emerald-400 text-sm">{order.id}</span>
-                        <span className="font-semibold text-white truncate">
+                        <span className="font-mono text-emerald-700 dark:text-emerald-400 text-sm">{order.id}</span>
+                        <span className="font-semibold text-text-primary truncate">
                           {hasPermission(PERMISSIONS.VIEW_PROJECT_NAME) ? order.projectName : 'Restricted'}
                         </span>
                         <StatusBadge status={overallStatus} />
                       </div>
                       <div className="flex items-center gap-4 mt-1 flex-wrap">
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-text-muted">
                           {hasPermission(PERMISSIONS.VIEW_CUSTOMER_NAME)
                             ? order.customerDetails?.name || 'N/A'
                             : 'Restricted'}
@@ -168,7 +168,7 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
                           </span>
                         )}
                         {planning?.deliveryLocation && (
-                          <span className="text-xs text-slate-500">📍 {planning.deliveryLocation}</span>
+                          <span className="text-xs text-text-muted">📍 {planning.deliveryLocation}</span>
                         )}
                       </div>
                     </div>
@@ -179,43 +179,43 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
                         <AlertCircle className="w-3.5 h-3.5" /> Not Planned
                       </span>
                     ) : (
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-text-secondary">
                         {completedStages}/{stages.length} stages
                       </span>
                     )}
-                    <ChevronRight className="w-4 h-4 text-slate-600" />
+                    <ChevronRight className="w-4 h-4 text-text-muted" />
                   </div>
                 </div>
 
                 {/* Planning Preview — only if planning exists */}
                 {planning && (
-                  <div className="border-t border-slate-800/60 bg-slate-950/30 px-5 py-4">
+                  <div className="border-t border-border bg-slate-50 dark:bg-slate-950/30 px-5 py-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                       {/* BOQ Summary */}
                       <div>
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
                           <Package className="w-3 h-3" /> BOQ Items
                         </p>
                         <div className="space-y-1.5">
                           {boqItems.slice(0, 3).map((item, i) => (
                             <div key={i} className="flex items-center justify-between text-sm">
-                              <span className="text-slate-400 truncate max-w-[150px]">{item.itemName}</span>
+                              <span className="text-text-secondary truncate max-w-[150px]">{item.itemName}</span>
                               <StatusBadge status={item.status || 'Pending'} />
                             </div>
                           ))}
                           {boqItems.length > 3 && (
-                            <p className="text-[10px] text-slate-600">+{boqItems.length - 3} more items</p>
+                            <p className="text-[10px] text-text-muted">+{boqItems.length - 3} more items</p>
                           )}
                           {boqItems.length === 0 && (
-                            <p className="text-xs text-slate-600 italic">No items planned</p>
+                            <p className="text-xs text-text-muted italic">No items planned</p>
                           )}
                         </div>
                       </div>
 
                       {/* Stage Progress */}
                       <div>
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
                           <Clock className="w-3 h-3" /> Stages
                         </p>
                         <div className="space-y-1.5">
@@ -224,8 +224,8 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
                               <div className={`w-2 h-2 rounded-full flex-shrink-0 ${stage.status === 'Completed' ? 'bg-emerald-400' :
                                   stage.status === 'In Progress' ? 'bg-blue-400' : stage.status === 'Not Applicable' ? 'bg-slate-500' : 'bg-slate-700'
                                 }`} />
-                              <span className="text-slate-400 flex-1 truncate">{stage.stage}</span>
-                              {stage.end && <span className="text-slate-600 text-xs">{stage.end}</span>}
+                              <span className="text-text-secondary flex-1 truncate">{stage.stage}</span>
+                              {stage.end && <span className="text-text-muted text-xs">{stage.end}</span>}
                             </div>
                           ))}
                         </div>
@@ -233,18 +233,18 @@ export function PlanningView({ orders, onSelectOrder, currentUser, hasPermission
 
                       {/* Milestones */}
                       <div>
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
                           <Flag className="w-3 h-3 text-amber-400" /> Milestones
                         </p>
                         <div className="space-y-1.5">
                           {(planning.milestones || []).filter(m => m.date).slice(0, 4).map((m, i) => (
                             <div key={i} className="flex items-center gap-2 text-sm">
                               <span className="text-amber-400 font-mono flex-shrink-0">{m.date}</span>
-                              <span className="text-slate-400 truncate">{m.title}</span>
+                              <span className="text-text-secondary truncate">{m.title}</span>
                             </div>
                           ))}
                           {!(planning.milestones || []).some(m => m.date) && (
-                            <p className="text-xs text-slate-600 italic">No milestones set</p>
+                            <p className="text-xs text-text-muted italic">No milestones set</p>
                           )}
                         </div>
                       </div>

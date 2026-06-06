@@ -12,7 +12,7 @@ export function CommercialTermsSection({ commercialTerms, setCommercialTerms }) 
             <select
               value={commercialTerms.paymentTerm}
               onChange={(e) => setCommercialTerms({...commercialTerms, paymentTerm: e.target.value})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
             >
               {PAYMENT_TERMS.map(term => <option key={term} value={term}>{term}</option>)}
             </select>
@@ -21,7 +21,7 @@ export function CommercialTermsSection({ commercialTerms, setCommercialTerms }) 
             <select
               value={commercialTerms.warrantyTerm}
               onChange={(e) => setCommercialTerms({...commercialTerms, warrantyTerm: e.target.value})}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2.5 text-white"
+              className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary"
             >
               {WARRANTY_TERMS.map(term => <option key={term} value={term}>{term}</option>)}
             </select>
@@ -31,7 +31,7 @@ export function CommercialTermsSection({ commercialTerms, setCommercialTerms }) 
           <textarea
             value={commercialTerms.others}
             onChange={(e) => setCommercialTerms({...commercialTerms, others: e.target.value})}
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2 text-white"
+            className="w-full bg-surface-raised border border-border rounded-xl px-4 py-2 text-text-primary"
             placeholder="Special specifications..."
             rows={1}
           />

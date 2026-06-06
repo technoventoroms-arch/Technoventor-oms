@@ -6,8 +6,8 @@ export function NavItem({ icon, label, active, onClick, badge }) {
       onClick={onClick}
       className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all ${
         active 
-          ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30' 
-          : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-gradient-to-r dark:from-emerald-500/20 dark:to-teal-500/20 dark:text-emerald-400 dark:border-emerald-500/30' 
+          : 'text-text-secondary hover:bg-surface-raised hover:text-text-primary'
       }`}
     >
       <span className="flex items-center gap-3">
