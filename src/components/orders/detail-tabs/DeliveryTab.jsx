@@ -25,6 +25,7 @@ export function DeliveryTab({ order, editingDelivery, setEditingDelivery, delive
           </h3>
           <p className="text-text-secondary mt-1 max-w-2xl text-sm leading-relaxed">
             Record final handover details and upload the signed Proof of Delivery (POD).
+            Completing delivery moves installable orders to the Service department.
           </p>
         </div>
 

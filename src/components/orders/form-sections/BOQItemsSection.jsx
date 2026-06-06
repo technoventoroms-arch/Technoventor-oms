@@ -21,7 +21,7 @@ export function BOQItemsSection({ items, setItems, updateItem, removeItem, addIt
       </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1200px]">
+        <table className="w-full min-w-[1320px]">
           <thead className="bg-white dark:bg-slate-950/50">
             <tr>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">Sr.</th>
@@ -31,6 +31,7 @@ export function BOQItemsSection({ items, setItems, updateItem, removeItem, addIt
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">Pricing (₹)</th>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">GST %</th>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">Type</th>
+              <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">Install</th>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase tracking-wider">Amount (₹)</th>
               <th className="p-4"></th>
             </tr>
@@ -131,12 +132,31 @@ export function BOQItemsSection({ items, setItems, updateItem, removeItem, addIt
                 <td className="p-4 w-32">
                   <select
                     value={item.itemType || 'goods'}
-                    onChange={(e) => updateItem(index, 'itemType', e.target.value)}
+                    onChange={(e) => {
+                      const type = e.target.value;
+                      updateItem(index, 'itemType', type);
+                      if (type === 'service') updateItem(index, 'requiresInstallation', false);
+                    }}
                     className="w-full bg-surface-raised border border-border rounded-lg px-2 py-1.5 text-[10px] text-text-primary font-bold uppercase"
                   >
                     <option value="goods">Goods</option>
                     <option value="service" className="text-blue-400">Service</option>
                   </select>
+                </td>
+                <td className="p-4 w-28 text-center">
+                  {(item.itemType || 'goods') === 'goods' ? (
+                    <label className="inline-flex items-center gap-1.5 cursor-pointer" title="Requires on-site installation after delivery">
+                      <input
+                        type="checkbox"
+                        checked={!!item.requiresInstallation}
+                        onChange={(e) => updateItem(index, 'requiresInstallation', e.target.checked)}
+                        className="rounded border-border text-rose-600 focus:ring-rose-500/30"
+                      />
+                      <span className="text-[10px] font-semibold text-text-secondary">Yes</span>
+                    </label>
+                  ) : (
+                    <span className="text-[10px] text-text-muted">—</span>
+                  )}
                 </td>
                 <td className="p-4 text-right">
                   <div className="text-xs text-text-muted mb-1">Total (Incl GST)</div>

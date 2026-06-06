@@ -1,21 +1,24 @@
 import React from 'react';
-import { Building2, CreditCard, Warehouse, Truck, CheckCircle2, ClipboardList } from 'lucide-react';
+import { Building2, CreditCard, Warehouse, Truck, Wrench, CheckCircle2, ClipboardList } from 'lucide-react';
 import { PERMISSIONS, STAGE_LABELS } from '../../constants';
 import { StageTag } from '../common';
+import { getPendingInstallationCount } from '../../utils/orderWorkflow';
 
 export function DepartmentView({ department, orders, pastOrders = [], onSelectOrder, onSelectOrderWithPlanning, currentUser, hasPermission }) {
   const icons = {
     procurement: <Building2 className="w-6 h-6" />,
     finance: <CreditCard className="w-6 h-6" />,
     stores: <Warehouse className="w-6 h-6" />,
-    dispatch: <Truck className="w-6 h-6" />
+    dispatch: <Truck className="w-6 h-6" />,
+    service: <Wrench className="w-6 h-6" />
   };
 
   const colors = {
     procurement: 'from-purple-500/20 to-purple-600/20 border-purple-500/30',
     finance: 'from-amber-500/20 to-amber-600/20 border-amber-500/30',
     stores: 'from-cyan-500/20 to-cyan-600/20 border-cyan-500/30',
-    dispatch: 'from-orange-500/20 to-orange-600/20 border-orange-500/30'
+    dispatch: 'from-orange-500/20 to-orange-600/20 border-orange-500/30',
+    service: 'from-rose-500/20 to-rose-600/20 border-rose-500/30'
   };
 
   const renderOrderCard = (order, isPast = false) => (
@@ -48,6 +51,11 @@ export function DepartmentView({ department, orders, pastOrders = [], onSelectOr
                   Items: {order.items?.length || 0}
                 </p>
               </div>
+            )}
+            {department === 'service' && (
+              <p className="text-sm text-rose-600 dark:text-rose-400 font-semibold">
+                {getPendingInstallationCount(order)} item(s) pending installation
+              </p>
             )}
           </div>
         </div>

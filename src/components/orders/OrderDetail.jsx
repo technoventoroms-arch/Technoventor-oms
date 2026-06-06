@@ -3,6 +3,13 @@ import { ChevronRight, Send, Users, Tag, ShieldCheck, CreditCard, Download, Doll
 import { PERMISSIONS, ORDER_STAGES, STAGE_LABELS, DEPARTMENTS } from '../../constants';
 import { InfoCard, StageTag, FormField, EmptyState } from '../common';
 import { formatAddress, formatDate, formatDateTime, downloadCSV } from '../../utils';
+import {
+  isDeliveryComplete,
+  isInvoiceComplete,
+  hasInstallableItems,
+  isAllInstallationComplete,
+  getStageAfterDelivery
+} from '../../utils/orderWorkflow';
 import { ProcurementForm } from './ProcurementForm';
 import { StoresForm } from './StoresForm';
 import { StoresInventoryForm } from './StoresInventoryForm';
@@ -91,7 +98,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
   });
 
   const [installationData, setInstallationData] = useState(order.installation || {
-    installedBy: '', siteContact: '', remarks: '', date: ''
+    installedBy: '', siteContact: '', remarks: '', date: '', boqInstallation: []
   });
 
   // Keep local states in sync when order changes
@@ -143,7 +150,7 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
       proofOfDelivery: '', handoverTo: '', remarks: '', deliveryDate: ''
     });
     setInstallationData(order.installation || {
-      installedBy: '', siteContact: '', remarks: '', date: ''
+      installedBy: '', siteContact: '', remarks: '', date: '', boqInstallation: []
     });
   }, [order]);
 
@@ -169,8 +176,11 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
 
     while (nextIndex < stages.length) {
       const nextStage = stages[nextIndex];
-      // If it's a goods-only stage and we have no goods, skip it
       if (goodsOnlyStages.includes(nextStage) && !hasGoods) {
+        nextIndex++;
+        continue;
+      }
+      if (nextStage === ORDER_STAGES.SERVICE && !hasInstallableItems(order)) {
         nextIndex++;
         continue;
       }
@@ -199,6 +209,10 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
     while (prevIndex >= 0) {
       const prevStage = stages[prevIndex];
       if (goodsOnlyStages.includes(prevStage) && !hasGoods) {
+        prevIndex--;
+        continue;
+      }
+      if (prevStage === ORDER_STAGES.SERVICE && !hasInstallableItems(order)) {
         prevIndex--;
         continue;
       }
@@ -465,13 +479,13 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
     const i = data || invoiceData;
     const updatePayload = { invoice: i };
     
-    if (i.invoiceNumber && i.invoiceDate && order.currentStage === ORDER_STAGES.INVOICE) {
-      updatePayload.currentStage = ORDER_STAGES.COMPLETED;
+    if (isInvoiceComplete(i) && order.currentStage === ORDER_STAGES.INVOICE) {
+      updatePayload.currentStage = ORDER_STAGES.DELIVERY;
       updatePayload.history = [
         ...(order.history || []),
         {
           date: new Date().toISOString(),
-          action: `Order marked as COMPLETED (Triggered by ${currentUser.name} - Invoice generated)`,
+          action: `Order automatically escalated to ${STAGE_LABELS[ORDER_STAGES.DELIVERY]} (Triggered by ${currentUser.name} - Invoice generated)`,
           by: 'System',
           department: 'System'
         }
@@ -496,8 +510,22 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
   const saveDelivery = (data) => {
     const d = data || deliveryData;
     const updatePayload = { delivery: d };
-    
-    if (!updatePayload.history) {
+
+    if (isDeliveryComplete(d) && order.currentStage === ORDER_STAGES.DELIVERY) {
+      const nextStage = getStageAfterDelivery({ ...order, delivery: d });
+      updatePayload.currentStage = nextStage;
+      updatePayload.history = [
+        ...(order.history || []),
+        {
+          date: new Date().toISOString(),
+          action: nextStage === ORDER_STAGES.SERVICE
+            ? `Order automatically escalated to ${STAGE_LABELS[nextStage]} (Triggered by ${currentUser.name} - Delivery completed, installation pending)`
+            : `Order marked as COMPLETED (Triggered by ${currentUser.name} - Delivery completed, no installation required)`,
+          by: 'System',
+          department: 'System'
+        }
+      ];
+    } else if (!updatePayload.history) {
       updatePayload.history = [
         ...(order.history || []),
         {
@@ -516,9 +544,22 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
 
   const saveInstallation = (data) => {
     const i = data || installationData;
-    const updatePayload = { 
-      installation: i,
-      history: [
+    const mergedOrder = { ...order, installation: i };
+    const updatePayload = { installation: i };
+
+    if (order.currentStage === ORDER_STAGES.SERVICE && isAllInstallationComplete(mergedOrder)) {
+      updatePayload.currentStage = ORDER_STAGES.COMPLETED;
+      updatePayload.history = [
+        ...(order.history || []),
+        {
+          date: new Date().toISOString(),
+          action: `Order marked as COMPLETED (Triggered by ${currentUser.name} - All installations completed)`,
+          by: 'System',
+          department: 'System'
+        }
+      ];
+    } else {
+      updatePayload.history = [
         ...(order.history || []),
         {
           date: new Date().toISOString(),
@@ -526,8 +567,8 @@ export function OrderDetail({ order, currentUser, hasPermission, onUpdate, onEsc
           by: currentUser.name,
           department: currentUser.department
         }
-      ]
-    };
+      ];
+    }
     
     onUpdate(updatePayload);
     if (data) setInstallationData(data);

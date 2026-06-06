@@ -106,7 +106,8 @@ function mapOrderToFrontend(order, items = [], purchases = [], finance = [], sto
       parentItemIndex: item.parent_item_index || null,
       description: item.description || '',
       shortQty: parseFloat(item.short_qty) || 0,
-      itemType: item.item_type || 'goods'
+      itemType: item.item_type || 'goods',
+      requiresInstallation: !!item.requires_installation
     })) : [],
     summary: {
       subTotal: parseFloat(order.sub_total) || 0,
@@ -214,7 +215,8 @@ function mapOrderToFrontend(order, items = [], purchases = [], finance = [], sto
       installedBy: installation.installed_by,
       siteContact: installation.site_contact,
       date: installation.installation_date,
-      remarks: installation.remarks
+      remarks: installation.remarks,
+      boqInstallation: Array.isArray(installation.boq_installation) ? installation.boq_installation : []
     } : null,
     history: Array.isArray(history) ? history.map(h => ({
       date: h.date,
@@ -393,9 +395,9 @@ router.post('/', async (req, res) => {
     if (o.items?.length) {
       for (const item of o.items) {
         await client.query(
-          `INSERT INTO order_items (order_id, item_index, name, item_code, make, model, quantity, unit, rate, amount, gst_percent, total_amount, parent_item_index, description, short_qty, item_type)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
-          [o.id, item.id, item.name, item.itemCode, item.make, item.model, item.quantity, item.unit, item.rate, item.amount, item.gstPercent, item.totalAmount, item.parentItemIndex || null, item.description || '', item.shortQty || 0, item.itemType || 'goods']
+          `INSERT INTO order_items (order_id, item_index, name, item_code, make, model, quantity, unit, rate, amount, gst_percent, total_amount, parent_item_index, description, short_qty, item_type, requires_installation)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`,
+          [o.id, item.id, item.name, item.itemCode, item.make, item.model, item.quantity, item.unit, item.rate, item.amount, item.gstPercent, item.totalAmount, item.parentItemIndex || null, item.description || '', item.shortQty || 0, item.itemType || 'goods', !!item.requiresInstallation]
         );
       }
     }
@@ -566,9 +568,9 @@ router.put('/:id', async (req, res) => {
       await client.query('DELETE FROM order_items WHERE order_id = $1', [newOrderId]);
       for (const item of o.items) {
         await client.query(
-          `INSERT INTO order_items (order_id, item_index, name, item_code, make, model, quantity, unit, rate, amount, gst_percent, total_amount, parent_item_index, description, short_qty, item_type)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
-          [newOrderId, item.id, item.name, item.itemCode, item.make, item.model, item.quantity, item.unit, item.rate, item.amount, item.gstPercent, item.totalAmount, item.parentItemIndex || null, item.description || '', item.shortQty || 0, item.itemType || 'goods']
+          `INSERT INTO order_items (order_id, item_index, name, item_code, make, model, quantity, unit, rate, amount, gst_percent, total_amount, parent_item_index, description, short_qty, item_type, requires_installation)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`,
+          [newOrderId, item.id, item.name, item.itemCode, item.make, item.model, item.quantity, item.unit, item.rate, item.amount, item.gstPercent, item.totalAmount, item.parentItemIndex || null, item.description || '', item.shortQty || 0, item.itemType || 'goods', !!item.requiresInstallation]
         );
       }
     }
@@ -674,9 +676,9 @@ router.put('/:id', async (req, res) => {
       await client.query('DELETE FROM order_installations WHERE order_id = $1', [newOrderId]);
       if (o.installation) {
         await client.query(
-          `INSERT INTO order_installations (order_id, installed_by, site_contact, installation_date, remarks)
-           VALUES ($1,$2,$3,$4,$5)`,
-          [newOrderId, o.installation.installedBy, o.installation.siteContact, nullIfEmpty(o.installation.date), o.installation.remarks]
+          `INSERT INTO order_installations (order_id, installed_by, site_contact, installation_date, remarks, boq_installation)
+           VALUES ($1,$2,$3,$4,$5,$6)`,
+          [newOrderId, o.installation.installedBy, o.installation.siteContact, nullIfEmpty(o.installation.date), o.installation.remarks, JSON.stringify(o.installation.boqInstallation || [])]
         );
       }
     }

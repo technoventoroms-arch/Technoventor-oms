@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Package, Plus, LayoutDashboard, Building2, ClipboardList, CreditCard, Warehouse, Truck, Users, Settings, LogOut } from 'lucide-react';
+import React from 'react';
+import { Package, Plus, LayoutDashboard, Building2, ClipboardList, CreditCard, Warehouse, Truck, Wrench, Users, Settings, LogOut } from 'lucide-react';
 
 export function Sidebar({ 
   isSidebarOpen, 
@@ -80,6 +80,9 @@ export function Sidebar({
         )}
         {hasPermission(PERMISSIONS.VIEW_DISPATCH) && (
           <NavItem icon={<Truck />} label="Dispatch" active={view === 'dispatch'} onClick={() => { setView('dispatch'); setSelectedOrder(null); }} />
+        )}
+        {hasPermission(PERMISSIONS.VIEW_SERVICE) && (
+          <NavItem icon={<Wrench />} label="Service" active={view === 'service'} onClick={() => { setView('service'); setSelectedOrder(null); }} />
         )}
 
         {(hasPermission(PERMISSIONS.MANAGE_USERS) || hasPermission(PERMISSIONS.MANAGE_PERMISSIONS)) && (

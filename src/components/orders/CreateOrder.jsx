@@ -80,7 +80,8 @@ export function CreateOrder({ onSubmit, onCancel }) {
     totalAmount: 0,
     parentItemIndex: null,
     description: '',
-    itemType: 'goods'
+    itemType: 'goods',
+    requiresInstallation: false
   }]);
 
   const [importMode, setImportMode] = useState(false);
@@ -101,7 +102,8 @@ export function CreateOrder({ onSubmit, onCancel }) {
       totalAmount: 0,
       parentItemIndex: null,
       description: '',
-      itemType: 'goods'
+      itemType: 'goods',
+    requiresInstallation: false
     }]);
   };
 
@@ -124,7 +126,8 @@ export function CreateOrder({ onSubmit, onCancel }) {
       totalAmount: 0,
       parentItemIndex: parentId,
       description: '',
-      itemType: 'goods'
+      itemType: 'goods',
+    requiresInstallation: false
     });
     setItems(newItems);
   };
@@ -258,7 +261,8 @@ export function CreateOrder({ onSubmit, onCancel }) {
         totalAmount: totalAmount,
         parentItemIndex: null,
         description: '',
-        itemType: 'goods'
+        itemType: 'goods',
+    requiresInstallation: false
       };
     }).filter(item => item !== null);
 

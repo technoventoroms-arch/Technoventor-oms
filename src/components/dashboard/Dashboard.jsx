@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Package, Plus, Building2, CreditCard, Warehouse, Truck, CheckCircle2, ClipboardList } from 'lucide-react';
+import { Package, Plus, Building2, CreditCard, Warehouse, Truck, Wrench, CheckCircle2, ClipboardList, FileText } from 'lucide-react';
 import { ORDER_STAGES, PERMISSIONS, STAGE_LABELS } from '../../constants';
 import { StatCard, StageTag } from '../common';
 import { STATUS_BADGE } from '../../constants/theme';
+import { getPendingInstallationCount } from '../../utils/orderWorkflow';
 
 export function Dashboard({ orders, currentUser, hasPermission, onSelectOrder }) {
   const [selectedStage, setSelectedStage] = useState('all');
@@ -16,12 +17,16 @@ export function Dashboard({ orders, currentUser, hasPermission, onSelectOrder })
       finance: orders.filter(o => o.currentStage === ORDER_STAGES.FINANCE).length,
       stores_inward: orders.filter(o => o.currentStage === ORDER_STAGES.STORES_INWARD).length,
       dispatch: orders.filter(o => o.currentStage === ORDER_STAGES.DISPATCH).length,
+      invoice: orders.filter(o => o.currentStage === ORDER_STAGES.INVOICE).length,
+      delivery: orders.filter(o => o.currentStage === ORDER_STAGES.DELIVERY).length,
+      service: orders.filter(o => o.currentStage === ORDER_STAGES.SERVICE).length,
       completed: orders.filter(o => o.currentStage === ORDER_STAGES.COMPLETED).length,
       totalValue: orders.reduce((sum, o) => sum + o.totalValue, 0),
       // Pending sub-counts
       pendingFinancePOs: 0,
       pendingInwardPOs: 0,
-      pendingDispatchItems: 0
+      pendingDispatchItems: 0,
+      pendingInstallationItems: 0
     };
 
     orders.forEach(order => {
@@ -62,6 +67,10 @@ export function Dashboard({ orders, currentUser, hasPermission, onSelectOrder })
           return !d || d.status !== 'Shipped';
         }).length;
         if (pendingCount > 0) s.pendingDispatchItems += pendingCount;
+      }
+
+      if (order.currentStage === ORDER_STAGES.SERVICE) {
+        s.pendingInstallationItems += getPendingInstallationCount(order);
       }
     });
 
@@ -136,7 +145,7 @@ export function Dashboard({ orders, currentUser, hasPermission, onSelectOrder })
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 gap-3">
         <StatCard label="Total" value={stats.total} icon={<Package />} color="slate" onClick={() => setSelectedStage('all')} />
         <StatCard label="New" value={stats.new} icon={<Plus />} color="blue" onClick={() => setSelectedStage('new')} />
         <StatCard label="Planning" value={stats.planning} icon={<ClipboardList className="w-5 h-5" />} color="indigo" onClick={() => setSelectedStage('planning')} />
@@ -145,6 +154,9 @@ export function Dashboard({ orders, currentUser, hasPermission, onSelectOrder })
         <StatCard label="Finance" value={stats.finance} icon={<CreditCard />} color="yellow" onClick={() => setSelectedStage('finance')} subValue={stats.pendingFinancePOs} subLabel="POs pend" />
         <StatCard label="Inward" value={stats.stores_inward} icon={<Warehouse />} color="cyan" onClick={() => setSelectedStage('stores_inward')} subValue={stats.pendingInwardPOs} subLabel="POs pend" />
         <StatCard label="Dispatch" value={stats.dispatch} icon={<Truck />} color="orange" onClick={() => setSelectedStage('dispatch')} subValue={stats.pendingDispatchItems} subLabel="Items pend" />
+        <StatCard label="Invoice" value={stats.invoice} icon={<FileText />} color="violet" onClick={() => setSelectedStage('invoice')} />
+        <StatCard label="Delivery" value={stats.delivery} icon={<Truck />} color="teal" onClick={() => setSelectedStage('delivery')} />
+        <StatCard label="Service" value={stats.service} icon={<Wrench />} color="rose" onClick={() => setSelectedStage('service')} subValue={stats.pendingInstallationItems} subLabel="Install pend" />
         <StatCard label="Done" value={stats.completed} icon={<CheckCircle2 />} color="green" onClick={() => setSelectedStage('completed')} />
       </div>
 

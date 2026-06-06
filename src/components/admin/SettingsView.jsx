@@ -174,6 +174,12 @@ export function SettingsView({ currentUser, onUpdateUser, hasPermission }) {
                     <ArrowRight className="w-3 h-3 text-text-muted" />
                     <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.dispatch}`}>Dispatch</span>
                     <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.invoice}`}>Invoice</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.delivery}`}>Delivery</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
+                    <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.service}`}>Service</span>
+                    <ArrowRight className="w-3 h-3 text-text-muted" />
                     <span className={`px-2 py-1 rounded text-xs ${STAGE_COLORS.completed}`}>Completed</span>
                   </div>
                 </div>

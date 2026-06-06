@@ -135,6 +135,12 @@ function App() {
       if (toIndex <= STAGES.indexOf(ORDER_STAGES.STORES_INWARD)) {
         updatedData.stores = { ...selectedOrder.stores, boqInwards: (selectedOrder.stores?.boqInwards || []).map(i => ({ ...i, inwardDate: '', receivedQuantity: '' })) };
       }
+      if (toIndex <= STAGES.indexOf(ORDER_STAGES.DELIVERY)) {
+        updatedData.delivery = null;
+      }
+      if (toIndex <= STAGES.indexOf(ORDER_STAGES.SERVICE)) {
+        updatedData.installation = null;
+      }
     }
     await handleUpdateOrder(updatedData);
   };
@@ -159,6 +165,7 @@ function App() {
       case 'finance': return hasPermission(PERMISSIONS.VIEW_FINANCE) ? <DepartmentView department="finance" orders={orders.filter(o => o.currentStage === ORDER_STAGES.FINANCE || (o.procurement?.boqPurchases || []).some(p => p.poDetails?.poStatus === 'Pending Approval' && !(o.finance || []).some(f => f.poNumber === p.poDetails?.poNumber && f.paymentStatus === 'Completed')))} pastOrders={orders.filter(o => (o.history || []).some(h => (h.department || '').toLowerCase().includes('finance')))} onSelectOrder={(o) => { setSelectedOrder(o); setOpenOrderTab(currentUser.department === 'finance' ? 'payments' : 'finance'); }} onSelectOrderWithPlanning={(o) => { setSelectedOrder(o); setOpenOrderTab('planning'); }} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
       case 'stores': return hasPermission(PERMISSIONS.VIEW_STORES) ? <DepartmentView department="stores" orders={orders.filter(o => o.currentStage === ORDER_STAGES.STORES || o.currentStage === ORDER_STAGES.STORES_INWARD || hasRaisedProcurementPO(o))} pastOrders={orders.filter(o => (o.history || []).some(h => (h.department || '').toLowerCase().includes('store')))} onSelectOrder={(o) => { setSelectedOrder(o); setOpenOrderTab(o.currentStage === ORDER_STAGES.STORES ? 'inventory' : 'stores'); }} onSelectOrderWithPlanning={(o) => { setSelectedOrder(o); setOpenOrderTab('planning'); }} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
       case 'dispatch': return hasPermission(PERMISSIONS.VIEW_DISPATCH) ? <DepartmentView department="dispatch" orders={orders.filter(o => o.currentStage === ORDER_STAGES.DISPATCH)} pastOrders={orders.filter(o => (o.history || []).some(h => (h.department || '').toLowerCase().includes('dispatch')))} onSelectOrder={(o) => { setSelectedOrder(o); setOpenOrderTab('dispatch'); }} onSelectOrderWithPlanning={(o) => { setSelectedOrder(o); setOpenOrderTab('planning'); }} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
+      case 'service': return hasPermission(PERMISSIONS.VIEW_SERVICE) ? <DepartmentView department="service" orders={orders.filter(o => o.currentStage === ORDER_STAGES.SERVICE)} pastOrders={orders.filter(o => o.currentStage !== ORDER_STAGES.SERVICE && (o.history || []).some(h => (h.department || '').toLowerCase().includes('service')))} onSelectOrder={(o) => { setSelectedOrder(o); setOpenOrderTab('installation'); }} onSelectOrderWithPlanning={(o) => { setSelectedOrder(o); setOpenOrderTab('planning'); }} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
       case 'planning': return hasPermission(PERMISSIONS.VIEW_PLANNING) ? <PlanningView orders={orders} onSelectOrder={(o) => { setSelectedOrder(o); setOpenOrderTab('planning'); }} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
       case 'users': return hasPermission(PERMISSIONS.MANAGE_USERS) ? <UserManagement users={users} onAddUser={api.createUser} onUpdateUser={api.updateUser} onDeleteUser={api.deleteUser} currentUser={currentUser} hasPermission={hasPermission} /> : <AccessDenied />;
       case 'permissions': return hasPermission(PERMISSIONS.MANAGE_PERMISSIONS) ? <PermissionManagement users={users} currentUser={currentUser} onUpdateUser={api.updateUser} /> : <AccessDenied />;

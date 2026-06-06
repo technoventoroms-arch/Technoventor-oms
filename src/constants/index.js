@@ -7,6 +7,7 @@ export const MODULES = {
   STORES: 'stores',
   DISPATCH: 'dispatch',
   INVOICING: 'invoicing',
+  SERVICE: 'service',
   USERS: 'users',
   SETTINGS: 'settings'
 };
@@ -60,6 +61,10 @@ export const PERMISSIONS = {
   EDIT_DELIVERY: 'edit_delivery',
   VIEW_INSTALLATION: 'view_installation',
   EDIT_INSTALLATION: 'edit_installation',
+
+  // Service department
+  VIEW_SERVICE: 'view_service',
+  EDIT_SERVICE: 'edit_service',
 
   // Actions
   ESCALATE_ORDERS: 'escalate_orders',
@@ -130,6 +135,10 @@ export const PERMISSION_GROUPS = {
     { key: PERMISSIONS.VIEW_INSTALLATION, label: 'View Installation Tab', description: 'Access order installation section' },
     { key: PERMISSIONS.EDIT_INSTALLATION, label: 'Edit Installation Details', description: 'Modify installation information and upload attachments' },
   ],
+  'Service Access': [
+    { key: PERMISSIONS.VIEW_SERVICE, label: 'View Service Department', description: 'Access service department queue and installation workflow' },
+    { key: PERMISSIONS.EDIT_SERVICE, label: 'Edit Service / Installation', description: 'Record installation details for delivered items' },
+  ],
   'Administration': [
     { key: PERMISSIONS.MANAGE_USERS, label: 'Manage Users', description: 'Add/edit/delete users' },
     { key: PERMISSIONS.MANAGE_PERMISSIONS, label: 'Manage Permissions', description: 'Change user access rights' },
@@ -157,6 +166,8 @@ export const PERMISSION_TEMPLATES = {
     PERMISSIONS.EDIT_DELIVERY,
     PERMISSIONS.VIEW_INSTALLATION,
     PERMISSIONS.EDIT_INSTALLATION,
+    PERMISSIONS.VIEW_SERVICE,
+    PERMISSIONS.EDIT_SERVICE,
   ],
   'Management': [
     PERMISSIONS.VIEW_DASHBOARD,
@@ -182,6 +193,8 @@ export const PERMISSION_TEMPLATES = {
     PERMISSIONS.EDIT_DELIVERY,
     PERMISSIONS.VIEW_INSTALLATION,
     PERMISSIONS.EDIT_INSTALLATION,
+    PERMISSIONS.VIEW_SERVICE,
+    PERMISSIONS.EDIT_SERVICE,
     PERMISSIONS.EXPORT_DATA,
   ],
   'Procurement Team': [
@@ -283,6 +296,21 @@ export const PERMISSION_TEMPLATES = {
     PERMISSIONS.VIEW_PLANNING,
     PERMISSIONS.ESCALATE_ORDERS,
   ],
+  'Service Team': [
+    PERMISSIONS.VIEW_DASHBOARD,
+    PERMISSIONS.VIEW_ASSIGNED_ORDERS,
+    PERMISSIONS.VIEW_ORDER_OVERVIEW,
+    PERMISSIONS.VIEW_PROJECT_NAME,
+    PERMISSIONS.VIEW_CUSTOMER_NAME,
+    PERMISSIONS.VIEW_BOQ,
+    PERMISSIONS.VIEW_ORDER_HISTORY,
+    PERMISSIONS.VIEW_INSTALLATION,
+    PERMISSIONS.EDIT_INSTALLATION,
+    PERMISSIONS.VIEW_SERVICE,
+    PERMISSIONS.EDIT_SERVICE,
+    PERMISSIONS.VIEW_PLANNING,
+    PERMISSIONS.ESCALATE_ORDERS,
+  ],
   'View Only': [
     PERMISSIONS.VIEW_DASHBOARD,
     PERMISSIONS.VIEW_ASSIGNED_ORDERS,
@@ -299,7 +327,8 @@ export const DEPARTMENTS = {
   FINANCE: 'finance',
   STORES: 'stores',
   DISPATCH: 'dispatch',
-  PLANNING: 'planning'
+  PLANNING: 'planning',
+  SERVICE: 'service'
 };
 
 export const ORDER_STAGES = {
@@ -311,6 +340,8 @@ export const ORDER_STAGES = {
   STORES_INWARD: 'stores_inward',
   DISPATCH: 'dispatch',
   INVOICE: 'invoice',
+  DELIVERY: 'delivery',
+  SERVICE: 'service',
   COMPLETED: 'completed'
 };
 
@@ -323,6 +354,8 @@ export const STAGE_LABELS = {
   stores_inward: 'Stores (Inward)',
   dispatch: 'Dispatch',
   invoice: 'Order Invoicing',
+  delivery: 'Delivery',
+  service: 'Service / Installation',
   completed: 'Completed'
 };
 
@@ -347,6 +380,7 @@ export const MODULE_LABELS = {
   stores: 'Stores & Inward',
   dispatch: 'Packaging & Dispatch',
   invoicing: 'Order Invoicing',
+  service: 'Service & Installation',
   planning: 'Order Planning',
   users: 'User Administration',
   permissions: 'System Permissions',

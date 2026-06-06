@@ -302,6 +302,12 @@ export async function createTables() {
     // Safe migrations for order_items
     await client.query(`
       ALTER TABLE order_items ADD COLUMN IF NOT EXISTS item_type VARCHAR(50) DEFAULT 'goods';
+      ALTER TABLE order_items ADD COLUMN IF NOT EXISTS requires_installation BOOLEAN DEFAULT false;
+    `);
+
+    // Safe migrations for order_installations
+    await client.query(`
+      ALTER TABLE order_installations ADD COLUMN IF NOT EXISTS boq_installation JSONB DEFAULT '[]';
     `);
 
     // Add ON UPDATE CASCADE to existing constraints
@@ -339,6 +345,13 @@ export async function createTables() {
       SET permissions = array_cat(permissions, ARRAY['view_delivery', 'edit_delivery']) 
       WHERE (department = 'admin' OR email = 'admin@company.com') 
       AND NOT ('view_delivery' = ANY(permissions));
+    `);
+
+    await client.query(`
+      UPDATE users 
+      SET permissions = array_cat(permissions, ARRAY['view_service', 'edit_service']) 
+      WHERE (department = 'admin' OR email = 'admin@company.com') 
+      AND NOT ('view_service' = ANY(permissions));
     `);
 
     await client.query('COMMIT');

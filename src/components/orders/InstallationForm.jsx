@@ -1,113 +1,178 @@
 import React, { useState } from 'react';
-import { Save, X, Calendar, User, Phone, FileText } from 'lucide-react';
+import { Wrench, Package } from 'lucide-react';
+import { getInstallableItems } from '../../utils/orderWorkflow';
 
-const InstallationForm = ({ initialData, onSave, onCancel }) => {
-  const [formData, setFormData] = useState({
-    installedBy: initialData?.installedBy || '',
-    siteContact: initialData?.siteContact || '',
-    remarks: initialData?.remarks || '',
-    date: initialData?.date || new Date().toISOString().split('T')[0],
+const InstallationForm = ({ order, initialData = {}, onSave, onCancel }) => {
+  const installableItems = getInstallableItems(order);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [itemStatuses, setItemStatuses] = useState(() => {
+    const existing = initialData?.boqInstallation || [];
+    return installableItems.map((item) => {
+      const entry = existing.find((b) => b.boqItemId === item.id);
+      return entry || {
+        boqItemId: item.id,
+        status: 'Pending',
+        installedBy: '',
+        installedDate: '',
+        remarks: ''
+      };
+    });
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData);
+  const updateItem = (boqItemId, field, value) => {
+    setItemStatuses((prev) =>
+      prev.map((entry) =>
+        entry.boqItemId === boqItemId ? { ...entry, [field]: value } : entry
+      )
+    );
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="bg-surface backdrop-blur-sm border border-border rounded-2xl p-6 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Installed By */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
-            Installed By
-          </label>
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <User className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
-            </div>
-            <input
-              type="text"
-              value={formData.installedBy}
-              onChange={(e) => setFormData({ ...formData, installedBy: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
-              placeholder="Technician/Team Name"
-              required
-            />
-          </div>
-        </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const invalid = itemStatuses.some(
+      (entry) =>
+        entry.status === 'Installed' && (!entry.installedBy?.trim() || !entry.installedDate)
+    );
+    if (invalid) {
+      alert('Please fill Installed By and Installation Date for all items marked Installed.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await onSave({
+        ...initialData,
+        boqInstallation: itemStatuses
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-        {/* Site Contact */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
-            Site Contact
-          </label>
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Phone className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
-            </div>
-            <input
-              type="text"
-              value={formData.siteContact}
-              onChange={(e) => setFormData({ ...formData, siteContact: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all"
-              placeholder="Name or Phone Number"
-              required
-            />
-          </div>
-        </div>
-
-        {/* Installation Date */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
-            Installation Date
-          </label>
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Calendar className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
-            </div>
-            <input
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 input-field pl-11"
-              required
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Remarks */}
-      <div className="space-y-2">
-        <label className="text-xs font-bold text-text-muted uppercase tracking-widest pl-1">
-          Remarks
-        </label>
-        <div className="relative group">
-          <div className="absolute top-3 left-4 pointer-events-none">
-            <FileText className="h-4 w-4 text-text-muted group-focus-within:text-blue-400 transition-colors" />
-          </div>
-          <textarea
-            value={formData.remarks}
-            onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-            className="w-full bg-white dark:bg-slate-950/50 border border-border text-text-primary rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all min-h-[100px] resize-none"
-            placeholder="Any specific installation notes..."
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-3 pt-4 border-t border-border">
+  if (installableItems.length === 0) {
+    return (
+      <div className="bg-surface border border-border rounded-2xl p-8 text-center">
+        <Package className="w-12 h-12 mx-auto mb-4 text-text-muted" />
+        <p className="text-text-secondary">No items on this order require installation.</p>
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-raised dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-text-secondary rounded-xl font-bold transition-all active:scale-[0.98]"
+          className="mt-6 px-6 py-2.5 border border-border text-text-secondary rounded-xl hover:bg-surface-raised"
         >
-          <X className="w-4 h-4" /> Cancel
+          Close
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6 pb-8">
+      <div className="bg-white dark:bg-slate-900 border border-border rounded-2xl p-6">
+        <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center gap-2">
+          <Wrench className="w-5 h-5 text-rose-500" />
+          Installation Checklist
+        </h3>
+        <p className="text-sm text-text-secondary mb-6">
+          Mark each delivered item as installed once on-site work is complete.
+        </p>
+
+        <div className="space-y-4">
+          {installableItems.map((item) => {
+            const entry = itemStatuses.find((s) => s.boqItemId === item.id) || {};
+            const isInstalled = entry.status === 'Installed';
+            return (
+              <div
+                key={item.id}
+                className={`rounded-2xl border p-4 transition-all ${
+                  isInstalled
+                    ? 'border-emerald-500/30 bg-emerald-500/5'
+                    : 'border-border bg-surface-raised dark:bg-slate-950/40'
+                } ${item.parentItemIndex ? 'ml-6' : ''}`}
+              >
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-text-primary">{item.name}</p>
+                    <p className="text-xs text-text-muted mt-1">
+                      Qty: {item.quantity} {item.unit}
+                      {item.itemCode ? ` · ${item.itemCode}` : ''}
+                    </p>
+                  </div>
+                  <select
+                    value={entry.status || 'Pending'}
+                    onChange={(e) => updateItem(item.id, 'status', e.target.value)}
+                    className={`rounded-xl border px-3 py-1.5 text-xs font-bold outline-none cursor-pointer ${
+                      isInstalled
+                        ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20'
+                        : 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20'
+                    }`}
+                  >
+                    <option value="Pending">Installation Pending</option>
+                    <option value="Installed">Installed</option>
+                  </select>
+                </div>
+
+                {isInstalled && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-border">
+                    <div>
+                      <label className="block text-[10px] font-bold text-text-muted uppercase mb-1">
+                        Installed By *
+                      </label>
+                      <input
+                        type="text"
+                        value={entry.installedBy || ''}
+                        onChange={(e) => updateItem(item.id, 'installedBy', e.target.value)}
+                        placeholder="Technician / team"
+                        className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-3 py-2 text-sm text-text-primary"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-text-muted uppercase mb-1">
+                        Installation Date *
+                      </label>
+                      <input
+                        type="date"
+                        value={entry.installedDate || ''}
+                        onChange={(e) => updateItem(item.id, 'installedDate', e.target.value)}
+                        className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-3 py-2 text-sm text-text-primary"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-text-muted uppercase mb-1">
+                        Remarks
+                      </label>
+                      <input
+                        type="text"
+                        value={entry.remarks || ''}
+                        onChange={(e) => updateItem(item.id, 'remarks', e.target.value)}
+                        placeholder="Optional notes"
+                        className="w-full bg-white dark:bg-slate-950 border border-border rounded-xl px-3 py-2 text-sm text-text-primary"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-6 py-2.5 border border-border text-text-secondary font-medium rounded-xl hover:bg-surface-raised"
+        >
+          Cancel
         </button>
         <button
           type="submit"
-          className="flex-[2] flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]"
+          disabled={isSubmitting}
+          className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-medium rounded-xl shadow-lg shadow-rose-500/20 flex items-center gap-2 disabled:opacity-50"
         >
-          <Save className="w-4 h-4" /> Save Installation Details
+          {isSubmitting ? <span className="w-4 h-4 btn-spinner" /> : <Wrench className="w-4 h-4" />}
+          {isSubmitting ? 'Saving...' : 'Save Installation Details'}
         </button>
       </div>
     </form>

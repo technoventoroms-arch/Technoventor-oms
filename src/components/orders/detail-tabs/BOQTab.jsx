@@ -22,6 +22,7 @@ export function BOQTab({ order, hasPermission, onExportBOQ }) {
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase">Item Description</th>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase">Specs</th>
               <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase">Qty/Unit</th>
+              <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase">Install</th>
               {hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && (
                 <>
                   <th className="text-left p-4 text-xs font-semibold text-text-muted uppercase">Rate</th>
@@ -55,6 +56,15 @@ export function BOQTab({ order, hasPermission, onExportBOQ }) {
                   <div className="text-[10px] text-text-muted">{item.model || '-'}</div>
                 </td>
                 <td className="p-4 text-sm text-text-secondary">{item.quantity} {item.unit}</td>
+                <td className="p-4 text-xs">
+                  {item.itemType === 'service' ? (
+                    <span className="text-text-muted">—</span>
+                  ) : item.requiresInstallation ? (
+                    <span className="px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 font-semibold">Required</span>
+                  ) : (
+                    <span className="text-text-muted">Deliver only</span>
+                  )}
+                </td>
                 {hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && (
                   <>
                     <td className="p-4 text-sm text-text-secondary font-mono">₹{item.rate.toLocaleString('en-IN')}</td>
@@ -68,17 +78,17 @@ export function BOQTab({ order, hasPermission, onExportBOQ }) {
           {hasPermission(PERMISSIONS.VIEW_ORDER_VALUE) && (
             <tfoot className="bg-surface-raised dark:bg-slate-800/20">
               <tr className="border-t border-border">
-                <td colSpan="6" className="p-4 text-right font-semibold text-text-secondary">Sub Total:</td>
+                <td colSpan="7" className="p-4 text-right font-semibold text-text-secondary">Sub Total:</td>
                 <td className="p-4 text-right font-mono text-text-primary font-bold text-lg">₹{(order.summary?.subTotal || order.totalValue).toLocaleString('en-IN')}</td>
               </tr>
               {order.summary && (
                 <tr>
-                  <td colSpan="6" className="px-4 py-2 text-right text-text-muted text-xs">Total GST:</td>
+                  <td colSpan="7" className="px-4 py-2 text-right text-text-muted text-xs">Total GST:</td>
                   <td className="px-4 py-2 text-right font-mono text-text-secondary text-sm">₹{order.summary.gstAmount.toLocaleString('en-IN')}</td>
                 </tr>
               )}
               <tr className="border-t-2 border-emerald-500/20">
-                <td colSpan="6" className="p-4 text-right font-black text-emerald-700 dark:text-emerald-400">GRAND TOTAL:</td>
+                <td colSpan="7" className="p-4 text-right font-black text-emerald-700 dark:text-emerald-400">GRAND TOTAL:</td>
                 <td className="p-4 text-right font-mono text-emerald-700 dark:text-emerald-400 font-black text-2xl animate-pulse">₹{(order.summary?.grandTotal || order.totalValue).toLocaleString('en-IN')}</td>
               </tr>
             </tfoot>
