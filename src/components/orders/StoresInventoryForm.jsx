@@ -25,7 +25,7 @@ export function StoresInventoryForm({ items, onSave, onCancel }) {
   const shortItems = localItems.filter(i => i.shortQty > 0);
   const availableItems = localItems.filter(i => i.shortQty === 0);
 
-  const inputCls = "w-full bg-surface-raised border border-border rounded-xl px-4 py-2.5 text-text-primary placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/40 font-mono text-center";
+  const inputCls = "w-20 min-w-[4.5rem] mx-auto bg-surface-raised border border-border rounded-xl px-2 py-2 text-sm text-text-primary placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/40 font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]";
 
   return (
     <div className="space-y-6 pb-20">
@@ -74,7 +74,7 @@ export function StoresInventoryForm({ items, onSave, onCancel }) {
               <th className="text-left p-4 text-[10px] font-bold text-text-muted uppercase tracking-widest">Item Description</th>
               <th className="text-left p-4 text-[10px] font-bold text-text-muted uppercase tracking-widest">Make / Model</th>
               <th className="text-center p-4 text-[10px] font-bold text-text-muted uppercase tracking-widest">BOQ Qty</th>
-              <th className="text-center p-4 text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-500/5 rounded-t-xl">Short Qty</th>
+              <th className="text-center p-4 text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-500/5 rounded-t-xl min-w-[6rem] w-[6rem]">Short Qty</th>
               <th className="text-center p-4 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Available</th>
               <th className="text-center p-4 text-[10px] font-bold text-text-muted uppercase tracking-widest">Status</th>
             </tr>
@@ -103,7 +103,7 @@ export function StoresInventoryForm({ items, onSave, onCancel }) {
                     <span className="text-sm text-text-primary font-mono font-bold">{item.quantity}</span>
                     <span className="text-[10px] text-text-muted ml-1">{item.unit}</span>
                   </td>
-                  <td className="p-4 bg-amber-500/5">
+                  <td className="p-4 bg-amber-500/5 min-w-[6rem] w-[6rem]">
                     <input
                       type="number"
                       step="0.01"
